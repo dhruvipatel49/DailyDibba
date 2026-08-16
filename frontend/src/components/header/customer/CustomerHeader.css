@@ -1,0 +1,63 @@
+.customer-header {
+    /* Sets the height based on screen width, making it responsive */
+    height: 34vw;
+    margin: 30px auto;
+    /* UPDATE THIS URL to point to a large banner image in your assets folder */
+    background: url('../../../assets/header_img.png') no-repeat;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    border-radius: 20px;
+    max-width: 1200px;
+    box-shadow: 0 4px 12px rgba(72, 69, 69, 0.1);
+}
+
+.header-contents {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 1.5vw;
+    max-width: 50%;
+    bottom: 10%;
+    left: 6vw;
+    animation: fadeIn 2s;
+}
+
+.header-contents h2 {
+    font-weight: 600;
+    color: white;
+    font-size: max(4vw, 22px);
+    /* Adds a slight text shadow so it's readable over light images */
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5); 
+}
+
+.header-contents p {
+    color: rgb(243, 243, 236);
+    font-size: max(1.2vw, 12px);
+    line-height: 1.5;
+    
+}
+
+.header-contents button {
+    border: none;
+    color: #1c1c1c;
+    font-weight: 500;
+    padding: 1vw 2.5vw;
+    background-color: white;
+    font-size: max(1.2vw, 13px);
+    border-radius: 50px;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.header-contents button:hover {
+    background-color: #f0f0f0;
+    transform: scale(1.05);
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}

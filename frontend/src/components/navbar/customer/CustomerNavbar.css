@@ -1,0 +1,214 @@
+/* Main Navbar Container */
+.customer-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    max-width: 1300px; /* Widened slightly to fit all elements */
+    margin: 0 auto; 
+    gap: 20px; /* Adds breathing room between the 4 sections */
+    max-height: 80px; /* Ensures the navbar doesn't get too tall */
+
+    position: sticky;
+    top: 0;
+    z-index: 1000; /* Forces the navbar to stay on top of all other images/text */
+    background-color: white;
+}
+
+.logo {
+    width: 140px;
+}
+
+/* =========================================
+   ZOMATO SEARCH BAR STYLING
+========================================= */
+.search-container {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border: 1px solid #e8e8e8;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    height: 54px;
+    flex: 1; /* Fix: Allows it to stretch, but limits it so menus fit */
+    max-width: 500px; 
+    transition: 0.2s ease-in-out;
+}
+
+.search-container:focus-within {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.location-section {
+    display: flex;
+    align-items: center;
+    padding: 0 10px 0 15px;
+    width: 35%; /* Adjusted for better fit */
+}
+
+.location-icon {
+    width: 25px;
+    height: 25px;
+    margin-right: 8px;
+}
+
+.location-input {
+    border: none;
+    outline: none;
+    font-size: 15px;
+    color: #1c1c1c;
+    width: 100%;
+    padding: 0 8px;
+}
+
+/* Ensure the parent is relative for absolute positioning of dropdown */
+.location-section {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* --- Location Dropdown Menu Styles --- */
+.location-dropdown-menu {
+    position: absolute;
+    top: 130%; /* Places it just below the location input */
+    left: 0;
+    background-color: #ffffff;
+    width: 250px;
+    box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15);
+    border-radius: 12px;
+    padding: 12px 0;
+    z-index: 1000;
+    border: 1px solid #eee;
+    animation: fadeIn 0.2s ease;
+}
+
+.location-dropdown-item {
+    padding: 12px 20px;
+    font-size: 14px;
+    color: #4f4f4f;
+    cursor: pointer;
+    transition: background 0.1s ease;
+}
+
+.location-dropdown-item:hover {
+    background-color: #f8f8f8;
+    color: #1c1c1c;
+}
+
+.location-dropdown-item.selected {
+    color: #e23744;
+    font-weight: 600;
+    background-color: #fff0f1;
+}
+
+/* Special style for the 'Detect Location' option */
+.detect-location {
+    color: #e23744;
+    font-weight: 500;
+}
+
+.location-dropdown-divider {
+    height: 1px;
+    background-color: #f0f0f0;
+    margin: 8px 0;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.caret-icon {
+    font-size: 10px;
+    color: #4f4f4f;
+    cursor: pointer;
+}
+
+.divider {
+    height: 60%;
+    width: 1px;
+    background-color: #cfcfcf;
+}
+
+.search-section {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    padding: 0 15px;
+}
+
+.search-icon {
+    width: 18px;
+    opacity: 0.5;
+}
+
+.search-input {
+    border: none;
+    outline: none;
+    font-size: 15px;
+    width: 100%;
+    padding: 0 12px;
+    color: #1c1c1c;
+}
+
+/* =========================================
+   MENU LINKS
+========================================= */
+.customer-navbar-menu {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+    color: #49557e;
+    font-size: 16px; /* Reduced slightly to save space */
+    white-space: nowrap; /* Prevents text from wrapping to a new line */
+}
+
+.customer-navbar-menu li {
+    cursor: pointer;
+}
+
+.customer-navbar-menu .active {
+    padding-bottom: 2px;
+    border-bottom: 2px solid #e23744; /* Matched Zomato Red */
+}
+
+/* =========================================
+   RIGHT SIDE STYLING (Login/Signup)
+========================================= */
+.customer-navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    white-space: nowrap;
+}
+
+.nav-link {
+    font-size: 17px;
+    color: #696969;
+    cursor: pointer;
+    font-weight: 300;
+}
+
+.nav-link:hover {
+    color: #1c1c1c;
+}
+
+.cart-container {
+    position: relative;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.cart-container img {
+    width: 24px;
+}
+
+.cart-container .dot {
+    position: absolute;
+    min-width: 10px;
+    min-height: 10px;
+    background-color: #e23744;
+    border-radius: 5px;
+    top: -5px;
+    right: -5px;
+}

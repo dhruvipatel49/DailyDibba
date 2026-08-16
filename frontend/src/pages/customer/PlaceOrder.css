@@ -1,0 +1,262 @@
+.orders-page {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+/* Header & Place New Order CTA */
+.orders-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.orders-header h2 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #1c1c1c;
+    margin: 0;
+}
+
+.orders-header p {
+    color: #7e7e7e;
+    font-size: 14px;
+    margin-top: 4px;
+}
+
+.new-order-btn {
+    background-color: #e23744;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.new-order-btn:hover {
+    background-color: #c82333;
+}
+
+/* 1. Active Order & Tracker Card */
+.active-order-section {
+    margin-bottom: 40px;
+}
+
+.active-order-badge {
+    display: inline-block;
+    background: #fff3e0;
+    color: #e65100;
+    font-weight: 700;
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.active-order-card {
+    background: #ffffff;
+    border: 1px solid #e8e8e8;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.active-order-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.active-order-top h3 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.order-id {
+    color: #828282;
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+.est-time {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+}
+
+.est-time span {
+    font-size: 12px;
+    color: #828282;
+}
+
+.est-time strong {
+    font-size: 18px;
+    color: #e23744;
+}
+
+/* Tracker Step System */
+.tracker-bar-container {
+    margin: 30px 0;
+    position: relative;
+}
+
+.tracker-steps {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+
+.tracker-steps::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: 10%;
+    right: 10%;
+    height: 3px;
+    background: #e0e0e0;
+    z-index: 1;
+}
+
+.step {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    background: white;
+    padding: 0 10px;
+}
+
+.step .dot {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background-color: #e0e0e0;
+    display: inline-block;
+    margin-bottom: 6px;
+    transition: 0.3s;
+}
+
+.step p {
+    font-size: 13px;
+    color: #828282;
+    margin: 0;
+}
+
+.step.completed .dot {
+    background-color: #24963f;
+    box-shadow: 0 0 0 4px rgba(36, 150, 63, 0.2);
+}
+
+.step.completed p {
+    color: #1c1c1c;
+    font-weight: 600;
+}
+
+.active-order-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 15px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.order-items-summary {
+    color: #4f4f4f;
+    font-size: 14px;
+}
+
+.order-price {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1c1c1c;
+    margin: 0;
+}
+
+/* 2. Past Orders Section */
+.past-orders-section h3 {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.past-orders-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.past-order-card {
+    border: 1px solid #eee;
+    border-radius: 14px;
+    padding: 18px 24px;
+    background: #ffffff;
+}
+
+.past-order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.past-order-header h4 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.past-date {
+    font-size: 12px;
+    color: #828282;
+    margin-top: 2px;
+}
+
+.status-delivered {
+    color: #24963f;
+    background: #e8f5e9;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.past-order-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.past-items p {
+    margin: 2px 0;
+    color: #616161;
+    font-size: 14px;
+}
+
+.past-order-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.past-price {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.reorder-btn {
+    border: 1px solid #e23744;
+    color: #e23744;
+    padding: 6px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.reorder-btn:hover {
+    background-color: #e23744;
+    color: white;
+}

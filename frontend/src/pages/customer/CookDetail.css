@@ -1,0 +1,164 @@
+.cook-detail-page {
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 0 20px 100px 20px;
+}
+
+.cook-hero {
+    position: relative;
+    width: 100%;
+    height: 320px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.cook-hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.wishlist-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 30px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.cook-meta {
+    margin-top: 20px;
+}
+
+.cook-meta-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cook-meta-header h2 {
+    font-size: 28px;
+    margin: 0;
+}
+
+.cook-rating-tag {
+    background-color: #24963f;
+    color: white;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 8px;
+}
+
+.cook-cuisine-tag {
+    color: #696969;
+    font-size: 16px;
+    margin: 8px 0 4px 0;
+}
+
+.cook-address-tag {
+    color: #828282;
+    font-size: 14px;
+    margin: 0;
+}
+
+.divider-line {
+    margin: 25px 0;
+    border: none;
+    height: 1px;
+    background: #e0e0e0;
+}
+
+.customization-container h3 {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.option-group {
+    margin-bottom: 24px;
+}
+
+.option-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.chip-options {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.chip {
+    padding: 12px 20px;
+    border: 1px solid #d0d0d0;
+    background: #f9f9f9;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.chip.selected {
+    border-color: #e23744;
+    background-color: #fff0f1;
+    color: #e23744;
+    font-weight: 600;
+}
+
+/* Sticky Bottom Action Bar */
+.order-bottom-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    padding: 16px 40px;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+}
+
+.price-breakdown span {
+    display: block;
+    font-size: 13px;
+    color: #777;
+}
+
+.price-breakdown strong {
+    font-size: 24px;
+    color: #1c1c1c;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.add-cart-btn {
+    border: 1px solid #e23744;
+    background: white;
+    color: #e23744;
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.pay-now-btn {
+    border: none;
+    background: #e23744;
+    color: white;
+    padding: 12px 28px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+}

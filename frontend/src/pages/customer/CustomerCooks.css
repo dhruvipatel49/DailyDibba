@@ -1,0 +1,221 @@
+.customer-cooks {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.customer-cooks h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #1c1c1c;
+    margin-bottom: 24px;
+}
+/* --- Filter Bar Styles --- */
+.filters-bar {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.filter-pill {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #ffffff;
+    border: 1px solid #cfcfcf;
+    color: #696969;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.filter-pill svg {
+    width: 14px;
+    height: 14px;
+    fill: currentColor; /* Inherits text color */
+}
+
+.filter-pill:hover {
+    background: #f8f8f8;
+    border-color: #999;
+}
+
+/* Style for when the filter is active */
+.filter-pill.active {
+    background-color: #fff0f1;
+    border-color: #e23744;
+    color: #e23744;
+}
+/* ------------------------- */
+/* --- Dropdown Styles --- */
+.dropdown-container {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 110%; /* Positions it right below the button */
+    left: 0;
+    background-color: #ffffff;
+    min-width: 180px;
+    box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.12);
+    border-radius: 12px;
+    padding: 8px 0;
+    z-index: 100;
+    border: 1px solid #eee;
+    animation: fadeIn 0.2s ease;
+}
+
+.dropdown-item {
+    padding: 10px 16px;
+    font-size: 14px;
+    color: #4f4f4f;
+    cursor: pointer;
+    transition: background 0.1s ease;
+}
+
+.dropdown-item:hover {
+    background-color: #f8f8f8;
+    color: #1c1c1c;
+}
+
+.dropdown-item.selected {
+    color: #e23744;
+    font-weight: 600;
+    background-color: #fff0f1;
+}
+
+/* Empty states */
+.no-results {
+    grid-column: 1 / -1; /* Makes it span across all columns */
+    text-align: center;
+    padding: 60px 20px;
+    background: #fcfcfc;
+    border-radius: 16px;
+    color: #666;
+}
+
+.no-results h3 {
+    color: #333;
+    margin-bottom: 8px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.cooks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 30px;
+}
+
+.cook-card {
+    border-radius: 16px;
+    background: #ffffff;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+}
+
+.cook-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+.cook-img-container {
+    position: relative;
+    width: 100%;
+    height: 200px;
+}
+
+.cook-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+}
+
+/* Top-Right Veg / Non-Veg Symbol */
+.diet-symbol {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 18px;
+    height: 18px;
+    background: white;
+    padding: 3px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.diet-symbol.veg {
+    border: 2px solid #24963f;
+}
+
+.diet-symbol.veg .dot {
+    width: 10px;
+    height: 10px;
+    background-color: #24963f;
+    border-radius: 50%;
+}
+
+.diet-symbol.non-veg {
+    border: 2px solid #e23744;
+}
+
+.diet-symbol.non-veg .dot {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 9px solid #e23744;
+}
+
+.cook-info {
+    padding: 14px 4px 8px 4px;
+}
+
+.cook-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cook-header h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1c1c1c;
+    margin: 0;
+}
+
+.cook-rating {
+    background-color: #24963f;
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 3px 7px;
+    border-radius: 6px;
+}
+
+.cook-cuisine {
+    color: #696969;
+    font-size: 14px;
+    margin: 6px 0 8px 0;
+}
+
+.cook-address {
+    color: #828282;
+    font-size: 13px;
+    margin: 0;
+}
