@@ -10,6 +10,7 @@ import CookDetail from './pages/customer/CookDetail'
 // 1. Import the new component
 import Wishlist from './pages/customer/Wishlist'
 
+
 const App = () => {
   return (
     <div className="app">

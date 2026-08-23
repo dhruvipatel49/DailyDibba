@@ -1,12 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import './Wishlist.css'
-import { cooks_list } from '../../assets/assets'
 import { useNavigate } from 'react-router-dom'
+import { StoreContext } from '../../context/StoreContext' // NEW IMPORT
 
 const Wishlist = () => {
   const navigate = useNavigate();
   
-  // Simulating wishlisted cooks by grabbing the first two from your assets
+  // Bring in live data from context
+  const { cooks_list, url } = useContext(StoreContext);
+  
+  // Simulating wishlisted cooks by grabbing the first two from your live database
   const wishlistedCooks = cooks_list.slice(0, 2);
 
   return (
@@ -28,7 +31,8 @@ const Wishlist = () => {
             <div key={cook._id} className="wishlist-card">
               
               <div className="wishlist-img-container" onClick={() => navigate(`/cook/${cook._id}`)}>
-                <img src={cook.image} alt={cook.cook_name} />
+                {/* Dynamically load the image from the backend */}
+                <img src={cook.image.startsWith('http') ? cook.image : `${url}/images/${cook.image}`} alt={cook.name} />
                 <div className={`diet-symbol ${cook.isVeg ? 'veg' : 'non-veg'}`}>
                   <span className="dot"></span>
                 </div>
@@ -36,8 +40,8 @@ const Wishlist = () => {
 
               <div className="wishlist-info">
                 <div className="wishlist-info-top">
-                  <h3>{cook.cook_name}</h3>
-                  <span className="cook-rating">{cook.rating} ★</span>
+                  <h3>{cook.name}</h3>
+                  <span className="cook-rating">{cook.rating || 0} ★</span>
                 </div>
                 <p className="cook-cuisine">{cook.cuisine}</p>
                 
@@ -60,4 +64,4 @@ const Wishlist = () => {
   )
 }
 
-export default Wishlist
+export default Wishlist;

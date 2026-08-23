@@ -1,15 +1,25 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import './Cart.css'
-import { food_list } from '../../assets/assets'
 import { useNavigate } from 'react-router-dom'
+import { StoreContext } from '../../context/StoreContext' // IMPORT CONTEXT
 
 const Cart = () => {
   const navigate = useNavigate();
 
-  // Displays items from food_list for cart preview
-  const cartItems = food_list.slice(0, 2); 
+  // Bring in the live data and cart functions
+  const { cartItems, food_list, removeFromCart, addToCart, url } = useContext(StoreContext);
 
-  const subtotal = cartItems.reduce((acc, item) => acc + (item.price * 10), 0);
+  // Calculate the live subtotal based on items in the cart
+  let subtotal = 0;
+  for (const item in cartItems) {
+    if (cartItems[item] > 0) {
+      let itemInfo = food_list.find((product) => product._id === item);
+      if (itemInfo) {
+         subtotal += itemInfo.price * cartItems[item];
+      }
+    }
+  }
+
   const deliveryFee = subtotal > 0 ? 30 : 0;
   const total = subtotal + deliveryFee;
 
@@ -17,7 +27,6 @@ const Cart = () => {
     <div className='cart'>
       <h2>Your Cart</h2>
       
-      {/* Cart Items Table */}
       <div className="cart-items">
         <div className="cart-items-title">
           <p>Items</p>
@@ -30,26 +39,34 @@ const Cart = () => {
         <br />
         <hr />
         
-        {cartItems.map((item) => (
-          <div key={item._id}>
-            <div className='cart-items-title cart-items-item'>
-              <img src={item.image} alt={item.name} />
-              <p>{item.name}</p>
-              <p>₹{item.price * 10}</p>
-              <div className="cart-quantity-controls">
-                <button className="qty-btn">-</button>
-                <span>1</span>
-                <button className="qty-btn">+</button>
+        {/* Loop through all food items, but only show ones in the cart */}
+        {food_list.map((item, index) => {
+          if (cartItems[item._id] > 0) {
+            return (
+              <div key={item._id}>
+                <div className='cart-items-title cart-items-item'>
+                  <img src={`${url}/images/${item.image}`} alt={item.name} />
+                  <p>{item.name}</p>
+                  <p>₹{item.price}</p>
+                  
+                  {/* Live quantity controls! */}
+                  <div className="cart-quantity-controls">
+                    <button className="qty-btn" onClick={() => removeFromCart(item._id)}>-</button>
+                    <span>{cartItems[item._id]}</span>
+                    <button className="qty-btn" onClick={() => addToCart(item._id)}>+</button>
+                  </div>
+                  
+                  <p>₹{item.price * cartItems[item._id]}</p>
+                  <p className='cross' onClick={() => removeFromCart(item._id)}>✕</p>
+                </div>
+                <hr />
               </div>
-              <p>₹{item.price * 10}</p>
-              <p className='cross'>✕</p>
-            </div>
-            <hr />
-          </div>
-        ))}
+            )
+          }
+          return null; // Don't render if not in cart
+        })}
       </div>
 
-      {/* Cart Summary & Promo Code Section */}
       <div className="cart-bottom">
         <div className="cart-total">
           <h2>Order Summary</h2>
@@ -86,4 +103,4 @@ const Cart = () => {
   )
 }
 
-export default Cart
+export default Cart;

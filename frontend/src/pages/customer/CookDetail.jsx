@@ -1,22 +1,28 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import './CookDetail.css'
 import { useParams, useNavigate } from 'react-router-dom'
-import { cooks_list } from '../../assets/assets'
+import { StoreContext } from '../../context/StoreContext' // IMPORT CONTEXT
 
 const CookDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  
+  // Grab live data from Context
+  const { cooks_list, url } = useContext(StoreContext);
 
-  // Find cook or fallback to first cook
-  const cook = cooks_list.find(c => c._id === id) || cooks_list[0];
+  // Find the specific cook using the ID from the URL
+  const cook = cooks_list.find(c => c._id === id);
 
-  // State management for order parameters
   const [isWishlisted, setIsWishlisted] = useState(false);
-  const [tiffinSize, setTiffinSize] = useState('Standard'); // Mini, Standard, Jumbo
-  const [duration, setDuration] = useState(1); // 1 Day, 7 Days, 15 Days
-  const [mealSlot, setMealSlot] = useState('Lunch'); // Lunch, Dinner, Both
+  const [tiffinSize, setTiffinSize] = useState('Standard'); 
+  const [duration, setDuration] = useState(1); 
+  const [mealSlot, setMealSlot] = useState('Lunch'); 
 
-  // Pricing calculations
+  // If the cook data hasn't loaded from the backend yet, show a loading message
+  if (!cook) {
+      return <div style={{textAlign: 'center', marginTop: '50px'}}>Loading Cook Details...</div>;
+  }
+
   const basePrice = tiffinSize === 'Mini' ? 120 : tiffinSize === 'Jumbo' ? 200 : 150;
   const slotMultiplier = mealSlot === 'Both' ? 2 : 1;
   const totalPrice = basePrice * slotMultiplier * duration;
@@ -24,9 +30,13 @@ const CookDetail = () => {
   return (
     <div className='cook-detail-page'>
       
-      {/* Cook Hero & Details Banner */}
       <div className="cook-hero">
-        <img src={cook.image} alt={cook.cook_name} className="cook-hero-img" />
+        {/* Render the image properly using the backend URL */}
+        <img 
+            src={cook.image.startsWith('http') ? cook.image : `${url}/images/${cook.image}`} 
+            alt={cook.name} 
+            className="cook-hero-img" 
+        />
         <button 
           className={`wishlist-btn ${isWishlisted ? 'active' : ''}`}
           onClick={() => setIsWishlisted(!isWishlisted)}
@@ -37,20 +47,18 @@ const CookDetail = () => {
 
       <div className="cook-meta">
         <div className="cook-meta-header">
-          <h2>{cook.cook_name}</h2>
-          <span className="cook-rating-tag">{cook.rating} ★</span>
+          <h2>{cook.name}</h2>
+          <span className="cook-rating-tag">{cook.rating || 0} ★</span>
         </div>
         <p className="cook-cuisine-tag">{cook.cuisine}</p>
-        <p className="cook-address-tag">📍 {cook.address}</p>
+        <p className="cook-address-tag">📍 {cook.address || "Local Kitchen"}</p>
       </div>
 
       <hr className="divider-line" />
 
-      {/* Subscription & Order Customization Section */}
       <div className="customization-container">
         <h3>Customize Your Dibba Plan</h3>
 
-        {/* 1. Tiffin Size Options */}
         <div className="option-group">
           <label>Select Tiffin Size</label>
           <div className="chip-options">
@@ -66,7 +74,6 @@ const CookDetail = () => {
           </div>
         </div>
 
-        {/* 2. Booking Duration */}
         <div className="option-group">
           <label>Select Booking Time (Subscription)</label>
           <div className="chip-options">
@@ -86,7 +93,6 @@ const CookDetail = () => {
           </div>
         </div>
 
-        {/* 3. Meal Slot */}
         <div className="option-group">
           <label>Select Meal Slot</label>
           <div className="chip-options">
@@ -103,7 +109,6 @@ const CookDetail = () => {
         </div>
       </div>
 
-      {/* Sticky Bottom Order Bar */}
       <div className="order-bottom-bar">
         <div className="price-breakdown">
           <span>Total for {duration} Day(s)</span>
@@ -119,4 +124,4 @@ const CookDetail = () => {
   )
 }
 
-export default CookDetail
+export default CookDetail;
