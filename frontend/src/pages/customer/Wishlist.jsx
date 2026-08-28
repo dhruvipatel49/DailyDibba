@@ -1,16 +1,18 @@
-import React, { useContext } from 'react'
-import './Wishlist.css'
-import { useNavigate } from 'react-router-dom'
-import { StoreContext } from '../../context/StoreContext' // NEW IMPORT
+import React, { useContext } from 'react';
+import './Wishlist.css';
+import { cooks_list } from '../../assets/assets';
+import { useNavigate } from 'react-router-dom';
+import { StoreContext } from '../../context/StoreContext';
 
 const Wishlist = () => {
   const navigate = useNavigate();
-  
-  // Bring in live data from context
-  const { cooks_list, url } = useContext(StoreContext);
-  
-  // Simulating wishlisted cooks by grabbing the first two from your live database
-  const wishlistedCooks = cooks_list.slice(0, 2);
+  const { wishlistItems = {}, toggleWishlist } = useContext(StoreContext);
+
+  // Filter cooks_list based on items saved in StoreContext
+  const wishlistedCooks = cooks_list.filter((cook) => {
+    const cookId = String(cook._id || cook.id);
+    return Boolean(wishlistItems[cookId]);
+  });
 
   return (
     <div className='wishlist-page'>
@@ -27,41 +29,49 @@ const Wishlist = () => {
         </div>
       ) : (
         <div className="wishlist-grid">
-          {wishlistedCooks.map((cook) => (
-            <div key={cook._id} className="wishlist-card">
-              
-              <div className="wishlist-img-container" onClick={() => navigate(`/cook/${cook._id}`)}>
-                {/* Dynamically load the image from the backend */}
-                <img src={cook.image.startsWith('http') ? cook.image : `${url}/images/${cook.image}`} alt={cook.name} />
-                <div className={`diet-symbol ${cook.isVeg ? 'veg' : 'non-veg'}`}>
-                  <span className="dot"></span>
-                </div>
-              </div>
+          {wishlistedCooks.map((cook) => {
+            const cookId = cook._id || cook.id;
 
-              <div className="wishlist-info">
-                <div className="wishlist-info-top">
-                  <h3>{cook.name}</h3>
-                  <span className="cook-rating">{cook.rating || 0} ★</span>
-                </div>
-                <p className="cook-cuisine">{cook.cuisine}</p>
+            return (
+              <div key={cookId} className="wishlist-card">
                 
-                <div className="wishlist-actions">
-                  <button 
-                    className="view-btn" 
-                    onClick={() => navigate(`/cook/${cook._id}`)}
-                  >
-                    View Menu
-                  </button>
-                  <button className="remove-btn">Remove</button>
+                <div className="wishlist-img-container" onClick={() => navigate(`/cook/${cookId}`)}>
+                  <img src={cook.image} alt={cook.cook_name} />
+                  <div className={`diet-symbol ${cook.isVeg ? 'veg' : 'non-veg'}`}>
+                    <span className="dot"></span>
+                  </div>
                 </div>
-              </div>
 
-            </div>
-          ))}
+                <div className="wishlist-info">
+                  <div className="wishlist-info-top">
+                    <h3>{cook.cook_name}</h3>
+                    <span className="cook-rating">{cook.rating} ★</span>
+                  </div>
+                  <p className="cook-cuisine">{cook.cuisine}</p>
+                  
+                  <div className="wishlist-actions">
+                    <button 
+                      className="view-btn" 
+                      onClick={() => navigate(`/cook/${cookId}`)}
+                    >
+                      View Menu
+                    </button>
+                    <button 
+                      className="remove-btn"
+                      onClick={() => toggleWishlist(cookId)}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+            );
+          })}
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
 export default Wishlist;

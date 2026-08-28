@@ -1,46 +1,59 @@
-import React, { useContext, useEffect, useState } from 'react'
-import './PlaceOrder.css'
-import { Link } from 'react-router-dom'
-import { StoreContext } from '../../context/StoreContext' // NEW IMPORT
-import axios from 'axios' // NEW IMPORT
+import React from 'react';
+import './PlaceOrder.css';
+import { orders_list } from '../../assets/assets';
+import { Link } from 'react-router-dom';
+// Import Leaflet Map Components
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+
+// Create custom icons for the map markers
+const createCustomIcon = (emoji) => {
+  return new L.divIcon({
+    className: 'custom-map-icon',
+    html: `<span>${emoji}</span>`,
+    iconSize: [36, 36],
+    iconAnchor: [18, 18],
+  });
+};
+
+const kitchenIcon = createCustomIcon('🍳');
+const riderIcon = createCustomIcon('🛵');
+const homeIcon = createCustomIcon('🏠');
 
 const PlaceOrder = () => {
-  const { url, token } = useContext(StoreContext);
-  const [orders, setOrders] = useState([]);
-
-  // Fetch the user's real orders from the backend!
-  const fetchOrders = async () => {
-    if (token) {
-      try {
-        const response = await axios.post(url + "/api/order/userorders", {}, { headers: { token } });
-        if (response.data.success) {
-          setOrders(response.data.data);
-        }
-      } catch (error) {
-        console.error("Error fetching orders:", error);
-      }
+  // Separate active order vs past orders
+  const activeOrderRaw = orders_list.find(order => order.status !== "Delivered");
+  
+  // Enhanced active order data with mock delivery partner details
+  const activeOrder = activeOrderRaw ? {
+    ...activeOrderRaw,
+    deliveryPartner: activeOrderRaw.deliveryPartner || {
+      name: "Ramesh Patel",
+      phone: "+91 98250 12345",
+      rating: "4.9",
+      vehicle: "EV Scooter • GJ-01-AB-4210",
+      avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80"
     }
-  }
+  } : null;
 
-  // Run this when the page loads or when the token changes
-  useEffect(() => {
-    fetchOrders();
-  }, [token]);
+  const pastOrders = orders_list.filter(order => order.status === "Delivered");
 
-  // Separate active order vs past orders based on backend status
-  // "Order Placed", "Preparing", "Out for Delivery" are active. "Delivered" is past.
-  const activeOrder = orders.find(order => order.status !== "Delivered");
-  const pastOrders = orders.filter(order => order.status === "Delivered");
+  // Real Ahmedabad Coordinates for the demo
+  const kitchenPos = [23.0300, 72.5600]; // Example: Navrangpura
+  const riderPos = [23.0260, 72.5650];   // Moving somewhere in between
+  const homePos = [23.0225, 72.5714];    // Example: Ellisbridge
 
   return (
     <div className='orders-page'>
       
+      {/* Top Header & New Order Action */}
       <div className="orders-header">
         <div>
           <h2>Your Orders</h2>
           <p>Manage active deliveries & view past meal history</p>
         </div>
-        <Link to='/cooks' className="new-order-btn">+ Place New Order</Link>
+        <Link to='/' className="new-order-btn">+ Place New Order</Link>
       </div>
 
       {/* 1. Track Current Active Order Section */}
@@ -51,22 +64,99 @@ const PlaceOrder = () => {
             
             <div className="active-order-top">
               <div>
-                <h3>Order from Cook ID: {activeOrder.cookId}</h3>
-                <p className="order-id">ID: {activeOrder._id} • {new Date(activeOrder.date).toLocaleDateString()}</p>
+                <h3>{activeOrder.cookName}</h3>
+                <p className="order-id">ID: {activeOrder._id} • {activeOrder.date}</p>
               </div>
               <div className="est-time">
-                <span>Status</span>
-                <strong>{activeOrder.status}</strong>
+                <span>Estimated Delivery</span>
+                <strong>{activeOrder.estimatedTime}</strong>
               </div>
             </div>
 
+            {/* --- REAL INTERACTIVE MAP --- */}
+            <div className="live-map-wrapper">
+              <div className="map-badge-status" style={{ zIndex: 1000 }}>
+                <span className="live-pulse"></span>
+                <span>Live Location Tracking</span>
+              </div>
+              
+              <MapContainer 
+                center={riderPos} 
+                zoom={14} 
+                scrollWheelZoom={false} 
+                style={{ height: '280px', width: '100%', zIndex: 1 }}
+              >
+                <TileLayer
+                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                  url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+                />
+                
+                <Marker position={kitchenPos} icon={kitchenIcon}>
+                  <Popup>{activeOrder.cookName}</Popup>
+                </Marker>
+                
+                <Marker position={riderPos} icon={riderIcon}>
+                  <Popup>{activeOrder.deliveryPartner.name} is on the way!</Popup>
+                </Marker>
+                
+                <Marker position={homePos} icon={homeIcon}>
+                  <Popup>Your Delivery Location</Popup>
+                </Marker>
+              </MapContainer>
+
+              {/* Delivery Partner Details Card */}
+              <div className="delivery-partner-card">
+                <div className="partner-profile">
+                  <img 
+                    src={activeOrder.deliveryPartner.avatar} 
+                    alt="Rider" 
+                    className="partner-avatar" 
+                  />
+                  <div className="partner-info">
+                    <div className="partner-name-row">
+                      <h4>{activeOrder.deliveryPartner.name}</h4>
+                      <span className="partner-rating">★ {activeOrder.deliveryPartner.rating}</span>
+                    </div>
+                    <p className="partner-vehicle">{activeOrder.deliveryPartner.vehicle}</p>
+                  </div>
+                </div>
+                <a href={`tel:${activeOrder.deliveryPartner.phone}`} className="call-partner-btn">
+                  📞 Call Partner
+                </a>
+              </div>
+            </div>
+            {/* --- END MAP --- */}
+
+            {/* Visual Progress Bar Tracker */}
+            <div className="tracker-bar-container">
+              <div className="tracker-steps">
+                <div className={`step ${activeOrder.step >= 1 ? 'completed' : ''}`}>
+                  <span className="dot"></span>
+                  <p>Order Placed</p>
+                </div>
+                <div className={`step ${activeOrder.step >= 2 ? 'completed' : ''}`}>
+                  <span className="dot"></span>
+                  <p>Preparing Food</p>
+                </div>
+                <div className={`step ${activeOrder.step >= 3 ? 'completed' : ''}`}>
+                  <span className="dot"></span>
+                  <p>Out for Delivery</p>
+                </div>
+                <div className={`step ${activeOrder.step >= 4 ? 'completed' : ''}`}>
+                  <span className="dot"></span>
+                  <p>Delivered</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Order Items Summary */}
             <div className="active-order-details">
               <div className="order-items-summary">
                 {activeOrder.items.map((item, idx) => (
-                  <span key={idx}>{item.name} x {item.quantity}{idx < activeOrder.items.length -1 ? ', ' : ''}</span>
+                  <span key={idx}>{item.name} × {item.quantity}</span>
                 ))}
               </div>
-              <p className="order-price">Total: ₹{activeOrder.amount}</p>
+              <p className="order-price">Total: ₹{activeOrder.totalAmount}</p>
             </div>
 
           </div>
@@ -76,41 +166,37 @@ const PlaceOrder = () => {
       {/* 2. Past Orders History Section */}
       <div className="past-orders-section">
         <h3>Past Orders</h3>
-        {pastOrders.length === 0 && !activeOrder ? (
-            <p>You have no orders yet!</p>
-        ) : (
-          <div className="past-orders-list">
-            {pastOrders.map((order) => (
-              <div key={order._id} className="past-order-card">
-                
-                <div className="past-order-header">
-                  <div>
-                    <h4>Order ID: {order._id.substring(0, 8)}...</h4>
-                    <p className="past-date">{new Date(order.date).toLocaleDateString()}</p>
-                  </div>
-                  <span className="status-delivered">✓ Delivered</span>
+        <div className="past-orders-list">
+          {pastOrders.map((order) => (
+            <div key={order._id} className="past-order-card">
+              
+              <div className="past-order-header">
+                <div>
+                  <h4>{order.cookName}</h4>
+                  <p className="past-date">{order.date}</p>
                 </div>
-
-                <div className="past-order-body">
-                  <div className="past-items">
-                    {order.items.map((item, idx) => (
-                      <p key={idx}>{item.name} × {item.quantity}</p>
-                    ))}
-                  </div>
-                  <div className="past-order-right">
-                    <span className="past-price">₹{order.amount}</span>
-                    <Link to='/cooks' className="reorder-btn">Reorder</Link>
-                  </div>
-                </div>
-
+                <span className="status-delivered">✓ Delivered</span>
               </div>
-            ))}
-          </div>
-        )}
+
+              <div className="past-order-body">
+                <div className="past-items">
+                  {order.items.map((item, idx) => (
+                    <p key={idx}>{item.name} × {item.quantity}</p>
+                  ))}
+                </div>
+                <div className="past-order-right">
+                  <span className="past-price">₹{order.totalAmount}</span>
+                  <Link to='/' className="reorder-btn">Reorder</Link>
+                </div>
+              </div>
+
+            </div>
+          ))}
+        </div>
       </div>
 
     </div>
-  )
-}
+  );
+};
 
 export default PlaceOrder;

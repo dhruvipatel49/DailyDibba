@@ -8,8 +8,13 @@
 }
 
 .explore-menu h1 {
-    color: #808080;
+    color: #4e4949;
     font-weight: 500;
+}
+
+.explore-menu h1:hover {
+    color: #e23744; /* Added hover effect for the clickable title */
+    transition: 0.2s;
 }
 
 .explore-menu-text {
@@ -21,6 +26,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 30px;
     text-align: center;
     margin: 20px 0px;
     overflow-x: scroll; /* Allows scrolling if there are many categories */
@@ -31,24 +37,60 @@
     display: none;
 }
 
+/* 1. Parent container styling */
+.explore-menu-list-item {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* 2. Image default state */
 .explore-menu-list-item img {
-    width: 16vw; /* Made slightly larger so the food is easier to see */
+    width: 17vw; 
     min-width: 120px;
     aspect-ratio: 1 / 1; /* Forces a perfect square shape */
-    object-fit: cover; /* Ensures the image fills the box without stretching/squishing */
-    cursor: pointer;
-    border-radius: 20px; /* Changes it from a circle to a rounded square */
-    transition: 0.5s;
-    box-shadow: 0 4px 10px rgb(255, 255, 255); /* Adds a very soft shadow for depth */
+    object-fit: cover; 
+    border-radius: 20px; 
+    transition: 0.3s;
+    border: 3px solid transparent; /* Keeps layout stable on hover */
+    /* Changed shadow slightly so it shows on a white background */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); 
 }
 
-/* Optional: Update the hover effect to look better with the square shape */
-.explore-menu-list-item img:hover {
+/* 3. Text default state */
+.explore-menu-list-item p {
+    margin-top: 10px;
+    color: #747474;
+    font-size: max(1.4vw, 16px);
+    transition: 0.3s; /* Smooth transition for text */
+}
+
+/* 4. HOVER EFFECTS (Triggers when hovering on the parent container) */
+.explore-menu-list-item:hover img {
     transform: scale(1.05); 
-    border: 1px solid #ffffff; /* Uses Zomato red */
-    padding: 0px; /* Removed the padding so the border hugs the image tightly */
-
+    border: 3px solid #615455; 
+    padding: 2px;
 }
+
+.explore-menu-list-item:hover p {
+    color: #615455; /* Text becomes darker */
+    font-weight: 600; /* Text becomes bolder */
+    transform: scale(1.05); /* Optional: text zooms slightly with the image */
+}
+
+/* 5. Active state when clicked */
+.explore-menu-list-item img.active {
+    border: 3px solid #615455;
+    padding: 2px;
+}
+
+/* Makes the text bold if the image above it is active */
+.explore-menu-list-item:has(img.active) p {
+    color: #615455;
+    font-weight: 600;
+}
+
 .explore-menu hr {
     margin: 10px 0px;
     height: 2px;

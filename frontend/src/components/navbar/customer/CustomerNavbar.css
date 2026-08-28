@@ -7,12 +7,6 @@
     max-width: 1300px; /* Widened slightly to fit all elements */
     margin: 0 auto; 
     gap: 20px; /* Adds breathing room between the 4 sections */
-    max-height: 80px; /* Ensures the navbar doesn't get too tall */
-
-    position: sticky;
-    top: 0;
-    z-index: 1000; /* Forces the navbar to stay on top of all other images/text */
-    background-color: white;
 }
 
 .logo {
@@ -47,9 +41,8 @@
 }
 
 .location-icon {
-    width: 25px;
-    height: 25px;
-    margin-right: 8px;
+    font-size: 18px;
+    color: #e23744; 
 }
 
 .location-input {
@@ -61,63 +54,6 @@
     padding: 0 8px;
 }
 
-/* Ensure the parent is relative for absolute positioning of dropdown */
-.location-section {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-/* --- Location Dropdown Menu Styles --- */
-.location-dropdown-menu {
-    position: absolute;
-    top: 130%; /* Places it just below the location input */
-    left: 0;
-    background-color: #ffffff;
-    width: 250px;
-    box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15);
-    border-radius: 12px;
-    padding: 12px 0;
-    z-index: 1000;
-    border: 1px solid #eee;
-    animation: fadeIn 0.2s ease;
-}
-
-.location-dropdown-item {
-    padding: 12px 20px;
-    font-size: 14px;
-    color: #4f4f4f;
-    cursor: pointer;
-    transition: background 0.1s ease;
-}
-
-.location-dropdown-item:hover {
-    background-color: #f8f8f8;
-    color: #1c1c1c;
-}
-
-.location-dropdown-item.selected {
-    color: #e23744;
-    font-weight: 600;
-    background-color: #fff0f1;
-}
-
-/* Special style for the 'Detect Location' option */
-.detect-location {
-    color: #e23744;
-    font-weight: 500;
-}
-
-.location-dropdown-divider {
-    height: 1px;
-    background-color: #f0f0f0;
-    margin: 8px 0;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-5px); }
-    to { opacity: 1; transform: translateY(0); }
-}
 .caret-icon {
     font-size: 10px;
     color: #4f4f4f;
@@ -211,4 +147,88 @@
     border-radius: 5px;
     top: -5px;
     right: -5px;
+}
+/* Main Navbar Container */
+.customer-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    max-width: 1300px; 
+    margin: 0 auto; 
+    gap: 20px; 
+    
+    /* --- ADD THESE 4 LINES --- */
+    position: sticky;
+    top: 0;
+    z-index: 1000; /* Forces the navbar to stay on top of all other images/text */
+    background-color: white; /* Prevents scrolling content from showing through */
+}
+.customer-navbar-menu a {
+    text-decoration: none;
+    color: inherit;
+}
+/* Ensure the parent is relative for absolute positioning of dropdown */
+.location-section {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* --- Location Dropdown Menu Styles --- */
+.location-dropdown-menu {
+    position: absolute;
+    top: 130%; /* Places it just below the location input */
+    left: 0;
+    background-color: #ffffff;
+    width: 250px;
+    box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15);
+    border-radius: 12px;
+    padding: 12px 0;
+    z-index: 1000;
+    border: 1px solid #eee;
+    animation: fadeIn 0.2s ease;
+}
+
+.location-dropdown-item {
+    padding: 12px 20px;
+    font-size: 14px;
+    color: #4f4f4f;
+    cursor: pointer;
+    transition: background 0.1s ease;
+}
+
+.location-dropdown-item:hover {
+    background-color: #f8f8f8;
+    color: #1c1c1c;
+}
+
+.location-dropdown-item.selected {
+    color: #e23744;
+    font-weight: 600;
+    background-color: #fff0f1;
+}
+
+/* Special style for the 'Detect Location' option */
+.detect-location {
+    color: #e23744;
+    font-weight: 500;
+}
+
+.location-dropdown-divider {
+    height: 1px;
+    background-color: #f0f0f0;
+    margin: 8px 0;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+/* Fix for the location icon image sizing */
+.location-icon img,
+img.location-icon {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
 }

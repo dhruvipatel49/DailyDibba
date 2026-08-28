@@ -5,34 +5,32 @@ import { Link, useNavigate } from 'react-router-dom'
 
 const CustomerNavbar = () => {
   const [menu, setMenu] = useState("home"); 
-  
-  // States for search and location
   const [location, setLocation] = useState("Ahmedabad");
   const [searchQuery, setSearchQuery] = useState("");
-  
-  // NEW: State for location dropdown visibility
   const [isLocationOpen, setIsLocationOpen] = useState(false);
   
-  // Mock list of cities for manual selection
   const availableCities = ['Ahmedabad', 'Surat', 'Vadodara', 'Rajkot', 'Gandhinagar', 'Bhavnagar'];
-
   const navigate = useNavigate();
 
   const handleSearchKeyPress = (e) => {
     if (e.key === 'Enter' && searchQuery.trim() !== "") {
-      navigate('/cooks'); 
+      // 1. Pass the search query into the URL parameters
+      navigate(`/cooks?search=${encodeURIComponent(searchQuery.trim())}`); 
       setMenu("cooks");   
     }
   };
 
   const clearSearch = () => {
     setSearchQuery("");
+    // Optional: If they clear the search, send them back to the unfiltered cooks page
+    if (window.location.pathname === '/cooks') {
+        navigate('/cooks');
+    }
   };
 
-  // Handle selecting a city from the dropdown
   const handleCitySelect = (city) => {
     setLocation(city);
-    setIsLocationOpen(false); // Close dropdown after selection
+    setIsLocationOpen(false); 
   };
 
   return (
@@ -45,13 +43,11 @@ const CustomerNavbar = () => {
         {/* Center: Search Bar */}
         <div className="search-container">
             
-            {/* Location Section with Dropdown */}
             <div className="location-section">
                 <span className="location-icon"> 
                     <img src={assets.location_1} alt="location" className='location-icon' />
                 </span>
                 
-                {/* Input also toggles dropdown when clicked */}
                 <input 
                     type="text" 
                     value={location} 
@@ -60,7 +56,6 @@ const CustomerNavbar = () => {
                     className="location-input" 
                 />
                 
-                {/* Caret icon toggles dropdown */}
                 <span 
                     className="caret-icon" 
                     onClick={() => setIsLocationOpen(!isLocationOpen)}
@@ -69,17 +64,14 @@ const CustomerNavbar = () => {
                     ▼
                 </span>
 
-                {/* LOCATION DROPDOWN MENU */}
                 {isLocationOpen && (
                     <div className="location-dropdown-menu">
-                        {/* Option to try detecting location manually (UI only for now) */}
                         <div className="location-dropdown-item detect-location">
                             <span style={{ color: '#e23744', marginRight: '8px' }}><img src={assets.location_1} alt="location" className='location-icon' /></span> 
                             Detect current location
                         </div>
                         <div className="location-dropdown-divider"></div>
                         
-                        {/* Map through available cities */}
                         {availableCities.map((city, index) => (
                             <div 
                                 key={index} 
@@ -121,7 +113,6 @@ const CustomerNavbar = () => {
             <Link to="/wishlist" onClick={() => setMenu("wishlist")} className={menu === "wishlist" ? "active" : ""}><li>Wishlist</li></Link>
         </ul>
 
-        {/* Far Right: Login/Signup & Cart */}
         <div className="customer-navbar-right">
             <span className="nav-link">Log in</span>
             <span className="nav-link">Sign up</span>
@@ -134,4 +125,4 @@ const CustomerNavbar = () => {
   )
 }
 
-export default CustomerNavbar
+export default CustomerNavbar;

@@ -1,40 +1,63 @@
 import React from 'react'
 import './CustomerExploreMenu.css'
 import { assets } from '../../../assets/assets'
-import { useNavigate } from 'react-router-dom' // 1. Import useNavigate
+import { useNavigate } from 'react-router-dom'
 
-const CustomerExploreMenu = () => {
-  const navigate = useNavigate(); // 2. Initialize it
+const CustomerExploreMenu = ({ category, setCategory }) => {
+  const navigate = useNavigate();
 
-  // Helper function to navigate and pass the cuisine name
-  const handleCuisineClick = (cuisineName) => {
-    navigate('/cooks', { state: { cuisine: cuisineName } });
-  }
+  // Helper function to handle category clicks
+  const handleCategoryClick = (cuisineName) => {
+    // Navigates to the Cooks page and passes the cuisine in the URL!
+    navigate(`/cooks?search=${cuisineName}`);
+  };
 
   return (
     <div className='explore-menu' id='explore-menu'>
-      <h1>Explore our dibbas</h1>
+      
+      <h1 
+        onClick={() => navigate('/cooks')} 
+        style={{ cursor: 'pointer', display: 'inline-block' }}
+        title="View all cooks"
+      >
+        Explore our dibbas
+      </h1>
       <p className='explore-menu-text'>Discover a variety of authentic, homemade meals crafted with love by local cooks in your neighborhood.</p>
       
       <div className="explore-menu-list">
-        {/* 3. Add onClick to each item and pass the matching cuisine name */}
-        <div className="explore-menu-list-item" onClick={() => handleCuisineClick('Gujarati')}>
-            <img src={assets.food_1} alt="Gujarati Thali" />
+        {/* Category 1: Gujarati */}
+        <div 
+          onClick={() => handleCategoryClick("Gujarati")} 
+          className="explore-menu-list-item"
+        >
+            <img className={category === "Gujarati" ? "active" : ""} src={assets.food_1} alt="Gujarati Thali" />
             <p>Gujarati</p>
         </div>
         
-        <div className="explore-menu-list-item" onClick={() => handleCuisineClick('Punjabi')}>
-            <img src={assets.food_2} alt="Punjabi" />
+        {/* Category 2: Punjabi */}
+        <div 
+          onClick={() => handleCategoryClick("Punjabi")} 
+          className="explore-menu-list-item"
+        >
+            <img className={category === "Punjabi" ? "active" : ""} src={assets.food_2} alt="Punjabi" />
             <p>Punjabi</p>
         </div>
         
-        <div className="explore-menu-list-item" onClick={() => handleCuisineClick('Jain')}>
-            <img src={assets.food_3} alt="Jain Food" />
+        {/* Category 3: Jain */}
+        <div 
+          onClick={() => handleCategoryClick("Jain")} 
+          className="explore-menu-list-item"
+        >
+            <img className={category === "Jain" ? "active" : ""} src={assets.food_3} alt="Jain Food" />
             <p>Jain</p>
         </div>
         
-        <div className="explore-menu-list-item" onClick={() => handleCuisineClick('Healthy')}>
-            <img src={assets.food_4} alt="Healthy/Diet" />
+        {/* Category 4: Healthy */}
+        <div 
+          onClick={() => handleCategoryClick("Healthy")} 
+          className="explore-menu-list-item"
+        >
+            <img className={category === "Healthy" ? "active" : ""} src={assets.food_4} alt="Healthy/Diet" />
             <p>Healthy</p>
         </div>
       </div>

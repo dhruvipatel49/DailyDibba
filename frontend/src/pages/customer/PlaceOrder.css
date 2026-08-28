@@ -69,6 +69,7 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+    margin-bottom: 20px;
 }
 
 .active-order-top h3 {
@@ -96,6 +97,205 @@
 .est-time strong {
     font-size: 18px;
     color: #e23744;
+}
+
+/* --- LIVE MAP TRACKING STYLES --- */
+.live-map-wrapper {
+    position: relative;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+    background: #eef2f5;
+    margin-bottom: 24px;
+}
+
+.map-badge-status {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(4px);
+    padding: 6px 14px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #1c1c1c;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.live-pulse {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #24963f;
+    box-shadow: 0 0 0 0 rgba(36, 150, 63, 0.7);
+    animation: pulseGlow 1.5s infinite;
+}
+
+@keyframes pulseGlow {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(36, 150, 63, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(36, 150, 63, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(36, 150, 63, 0); }
+}
+
+.map-canvas {
+    position: relative;
+    height: 200px;
+    width: 100%;
+    background-color: #e5ecef;
+    /* Subtle road network texture overlay */
+    background-image: 
+        radial-gradient(#d1d5db 1px, transparent 1px),
+        linear-gradient(to right, #e2e8f0 1px, transparent 1px),
+        linear-gradient(to bottom, #e2e8f0 1px, transparent 1px);
+    background-size: 20px 20px, 40px 40px, 40px 40px;
+}
+
+
+.route-path-bg {
+    fill: none;
+    stroke: #cbd5e1;
+    stroke-width: 5;
+    stroke-linecap: round;
+}
+
+.route-path-active {
+    fill: none;
+    stroke: #e23744;
+    stroke-width: 4;
+    stroke-dasharray: 8 6;
+    stroke-linecap: round;
+    animation: strokeFlow 20s linear infinite;
+}
+
+@keyframes strokeFlow {
+    from { stroke-dashoffset: 200; }
+    to { stroke-dashoffset: 0; }
+}
+
+/* Map Pins */
+/* Real Map Container Fixes */
+.leaflet-container {
+    border-radius: 14px 14px 0 0;
+}
+
+/* Custom Marker Styling */
+.custom-map-icon {
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    border: 2px solid #e23744;
+}
+
+@keyframes bounceRider {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+}
+
+.pin-pulse {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(226, 55, 68, 0.2);
+    animation: ripple 1.8s infinite ease-out;
+    z-index: -1;
+}
+
+@keyframes ripple {
+    0% { width: 10px; height: 10px; opacity: 1; }
+    100% { width: 50px; height: 50px; opacity: 0; }
+}
+
+.pin-tooltip {
+    background: #1c1c1c;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 8px;
+    border-radius: 6px;
+    margin-top: 4px;
+    white-space: nowrap;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+/* Delivery Partner Details Card */
+.delivery-partner-card {
+    background: #ffffff;
+    padding: 14px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #e2e8f0;
+}
+
+.partner-profile {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.partner-avatar {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #e23744;
+}
+
+.partner-name-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.partner-name-row h4 {
+    margin: 0;
+    font-size: 15px;
+    color: #1c1c1c;
+}
+
+.partner-rating {
+    background: #24963f;
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.partner-vehicle {
+    margin: 3px 0 0 0;
+    font-size: 12px;
+    color: #718096;
+}
+
+.call-partner-btn {
+    background: #fdf2f2;
+    color: #e23744;
+    border: 1px solid #f87171;
+    padding: 8px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.call-partner-btn:hover {
+    background: #e23744;
+    color: white;
 }
 
 /* Tracker Step System */

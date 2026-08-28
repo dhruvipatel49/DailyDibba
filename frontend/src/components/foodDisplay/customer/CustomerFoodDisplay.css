@@ -1,70 +1,173 @@
+/* Main Section Container - Centered to match header and menu sections */
 .food-display {
-    max-width: 1200px;
-    margin: 30px auto;
+  width: 80%;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0;
 }
 
 .food-display h2 {
-    font-size: max(2vw, 24px);
-    font-weight: 600;
-    color: #262626;
+  font-size: max(2vw, 24px);
+  font-weight: 700;
+  color: #262626;
+  margin-bottom: 24px;
 }
 
+/* Responsive Grid - Fits cards evenly across the row */
 .food-display-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    margin-top: 30px;
-    gap: 30px;
-    row-gap: 50px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 24px;
+  row-gap: 32px;
 }
 
+/* Card Container */
 .food-item {
-    width: 100%;
-    margin: auto;
-    border-radius: 15px;
-    box-shadow: 0px 0px 10px #00000015;
-    transition: 0.3s;
-    animation: fadeIn 1s;
+  width: 100%;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  background-color: #ffffff;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .food-item:hover {
-    transform: translateY(-5px);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* Image & Overlay Action Button Container */
+.food-item-img-container {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
 }
 
 .food-item-image {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 15px 15px 0px 0px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
 }
 
+.food-item:hover .food-item-image {
+  transform: scale(1.04);
+}
+
+/* Floating Action Button */
+.food-item-cart-action {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  z-index: 2;
+}
+
+/* ADD + Button */
+.food-item-cart-action .add-btn {
+  background-color: #ffffff;
+  color: #e23744;
+  border: 1px solid #e23744;
+  padding: 6px 18px;
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: 20px;
+  cursor: pointer;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease;
+  letter-spacing: 0.5px;
+}
+
+.food-item-cart-action .add-btn:hover {
+  background-color: #e23744;
+  color: #ffffff;
+  transform: scale(1.05);
+}
+
+/* Counter Controls (- 1 +) */
+.food-item-cart-action .counter-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #ffffff;
+  padding: 4px 10px;
+  border-radius: 20px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+  border: 1px solid #e23744;
+}
+
+.food-item-cart-action .counter-btn button {
+  background: transparent;
+  border: none;
+  color: #e23744;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+}
+
+.food-item-cart-action .counter-btn button:hover {
+  background-color: #ffeae8;
+}
+
+.food-item-cart-action .counter-btn span {
+  font-size: 13px;
+  font-weight: 700;
+  color: #262626;
+  min-width: 14px;
+  text-align: center;
+}
+
+/* Card Content Details */
 .food-item-info {
-    padding: 20px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
 .food-item-name-rating {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
 }
 
 .food-item-name-rating p {
-    font-size: 20px;
-    font-weight: 500;
+  font-size: 17px;
+  font-weight: 600;
+  color: #262626;
+  margin: 0;
 }
 
 .food-item-name-rating img {
-    width: 70px;
+  width: 70px;
+  height: auto;
 }
 
 .food-item-desc {
-    color: #676767;
-    font-size: 13px;
+  color: #676767;
+  font-size: 12px;
+  line-height: 1.4;
+  margin: 0 0 12px 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .food-item-price {
-    color: #e23744;
-    font-size: 22px;
-    font-weight: 500;
-    margin: 10px 0px;
+  color: #e23744;
+  font-size: 18px;
+  font-weight: 700;
+  margin: auto 0 0 0;
 }
