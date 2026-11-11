@@ -1,0 +1,60 @@
+.header {
+    height: 34vw;
+    margin: 30px auto;
+    background: url('/header_img.png') no-repeat; /* Ensure this image exists in your public folder */
+    background-size: cover;
+    position: relative;
+    border-radius: 20px;
+}
+
+.header {
+    height: 34vw;
+    margin: 30px auto;
+    /* Remove the static background: url(...) line from here */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center; /* Ensures the image stays centered */
+    position: relative;
+    border-radius: 20px;
+    max-width: 94%; /* Optional: Adds some padding inside the header */
+}
+
+/* ... keep the rest of your Header.css exactly the same ... */
+.header-contents {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 1.5vw;
+    max-width: 50%;
+    bottom: 10%;
+    left: 6vw;
+    animation: fadeIn 3s;
+}
+
+.header-contents h2 {
+    font-weight: 500;
+    color: white;
+    font-size: max(4.5vw, 22px);
+}
+
+.header-contents p {
+    color: white;
+    font-size: 1vw;
+}
+
+.header-contents button {
+    border: none;
+    color: #747474;
+    font-weight: 500;
+    padding: 1vw 2.3vw;
+    background-color: white;
+    font-size: max(1vw, 13px);
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}

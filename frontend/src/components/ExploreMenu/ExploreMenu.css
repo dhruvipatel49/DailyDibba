@@ -1,0 +1,64 @@
+.explore-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px 35px;
+}
+
+.explore-menu h1 {
+    color: #545252;
+    font-weight: 500;
+}
+
+.explore-menu-text {
+    max-width: 60%;
+    color: #808080;
+}
+
+.explore-menu-list {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+    text-align: center;
+    margin: 20px 0px;
+    overflow-x: scroll;
+}
+
+/* Hides the scrollbar for a cleaner UI */
+.explore-menu-list::-webkit-scrollbar {
+    display: none;
+}
+
+.explore-menu-list-item img {
+    width: 9vw;
+    min-width: 250px;
+    cursor: pointer;
+    border-radius: 15px;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    transition: 0.2s;
+    padding: 8px;
+    background-color: #f9f9f9;
+}
+
+.explore-menu-list-item p {
+    margin-top: 15px;
+    color: #747474;
+    font-size: max(1.4vw, 16px);
+    cursor: pointer;
+}
+
+.explore-menu-list-item hr {
+    margin: 10px 0px;
+    height: 2px;
+    background-color: #e2e2e2;
+    border: none;
+}
+
+.explore-menu-list-item .active {
+    border: 3px solid tomato;
+    padding: 6px;
+    border-radius: 18px;
+    background-color: #fff4f2;
+}

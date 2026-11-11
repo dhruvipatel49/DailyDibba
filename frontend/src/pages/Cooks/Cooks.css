@@ -1,0 +1,243 @@
+/* Maintain the top margin for navbar spacing */
+.cooks-page {
+    margin-top: 10px;
+    padding: 0 35px; /* Added side padding to match your Cart and Home pages */
+}
+
+.cooks-header {
+    text-align: left; /* Aligned left to match "Top Dibbas near you" */
+    margin-bottom: 30px;
+}
+
+.cooks-header h2 {
+    font-size: max(2vw, 24px);
+    color: #262626;
+    font-weight: 600;
+}
+
+.cooks-header p {
+    color: #808080;
+    margin-top: 5px;
+    font-size: 14px; /* Slightly smaller for a cleaner subtitle */
+    max-width: 90%; /* Prevents text from stretching across the whole screen */
+}
+
+/* Updated Grid to perfectly match FoodDisplay.css */
+.cooks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); /* Matches FoodDisplay column width */
+    margin-top: 30px;
+    gap: 30px;
+    row-gap: 50px;
+}
+
+/* Updated Card to perfectly match FoodItem.css */
+.cook-card {
+    width: 100%;
+    margin: auto;
+    background-color: white;
+    border-radius: 15px; /* Matches food item border radius */
+    box-shadow: 0px 0px 10px #00000015; /* Exact shadow from FoodItem */
+    transition: 0.3s;
+    animation: fadeIn 1s; /* Smooth load-in */
+}
+
+.cook-card:hover {
+    transform: translateY(-3px); /* Subtler hover effect */
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+/* Image container and image styling */
+.cook-img-container {
+    position: relative;
+    width: 100%;
+}
+
+.cook-img {
+    width: 100%;
+    border-radius: 15px 15px 0px 0px; /* Only round the top corners, exactly like FoodItem */
+    object-fit: cover;
+    aspect-ratio: 4/3; /* Keeps all cook images mathematically consistent with the food cards */
+}
+
+/* Adjusted Veg Badge to look cleaner */
+.veg-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: #28a745;
+    color: white;
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    border-radius: 50px; /* Pill shape */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Info section padding matches FoodItem */
+.cook-info {
+    padding: 20px;
+}
+
+.cook-name-rating {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+/* Matches food-item-name-rating p */
+.cook-name-rating h3 {
+    font-size: 20px;
+    font-weight: 500;
+    color: #262626;
+    margin: 0;
+}
+
+/* Cleaned up rating to match FoodItem stars */
+.rating {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.rating p {
+    font-size: 13px;
+    font-weight: 600;
+    color: #676767;
+    margin: 0;
+}
+
+.rating img {
+    width: 70px; /* Exact width from FoodItem.css */
+}
+
+.cook-cuisine {
+    color: #ff4c24; /* Tomato accent color */
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    margin-top: 5px;
+}
+
+.cook-address {
+    color: #676767; /* Matches food-item-desc */
+    font-size: 12px;
+    margin-bottom: 15px;
+}
+
+/* Sleeker View Menu Button */
+.view-menu-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #fff4f2;
+    border: none;
+    color: #ff4c24;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.view-menu-btn:hover {
+    background-color: #ff4c24;
+    color: white;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+/* --- Filter Bar Styling --- */
+.cooks-filter-bar {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+    overflow-x: auto;
+    padding-bottom: 10px; /* Space for a subtle scrollbar if needed on mobile */
+}
+
+/* Hides the scrollbar for a cleaner UI on desktop */
+.cooks-filter-bar::-webkit-scrollbar {
+    display: none;
+}
+
+.filter-chip {
+    padding: 8px 20px;
+    background-color: #f2f2f2;
+    border: 1px solid #e0e0e0;
+    border-radius: 50px;
+    color: #49557e;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap; /* Keeps the text on one line */
+    transition: 0.3s ease;
+}
+
+.filter-chip:hover {
+    background-color: #e2e2e2;
+}
+
+/* The active state for the clicked filter */
+.filter-chip.active {
+    background-color: #ff4c24; /* DailyDibba tomato color */
+    color: white;
+    border-color: #ff4c24;
+    box-shadow: 0 4px 10px rgba(255, 76, 36, 0.2);
+}
+
+/* Empty State Message */
+.no-cooks-found {
+    text-align: center;
+    padding: 50px 0;
+    color: #808080;
+    font-size: 16px;
+    grid-column: 1 / -1; /* Spans the full width of the grid */
+}
+
+.cooks-extra-filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px;
+    margin-top: -15px;
+    margin-bottom: 25px;
+}
+
+.cooks-select {
+    padding: 8px 16px;
+    border: 1px solid #e0e0e0;
+    border-radius: 50px;
+    background-color: #f9f9f9;
+    color: #49557e;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    outline: none;
+}
+
+.cooks-veg-toggle {
+    display: inline-flex;
+    border: 1px solid #e0e0e0;
+    border-radius: 50px;
+    overflow: hidden;
+    background-color: #f2f2f2;
+}
+
+.cooks-veg-toggle button {
+    border: none;
+    background: transparent;
+    padding: 7px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #49557e;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.cooks-veg-toggle button.active {
+    background-color: #ff4c24;
+    color: white;
+}

@@ -1,0 +1,193 @@
+.cart {
+    margin-top: 100px;
+    padding: 20px 35px;
+}
+
+/* Header row for the table */
+.cart-items-title {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr 0.5fr;
+    align-items: center;
+    color: #808080;
+    font-size: max(1vw, 14px);
+    font-weight: 600;
+    padding-bottom: 10px;
+}
+
+/* Individual item row */
+.cart-items-item {
+    margin: 15px 0px;
+    color: #49557e;
+    font-weight: 500;
+    align-items: center;
+    transition: 0.3s ease;
+}
+
+.cart-items-item:hover {
+    background-color: #fcfcfc;
+    border-radius: 12px;
+}
+
+/* Make the cart images look like the home page dibba cards */
+.cart-items-item img {
+    width: 60px;
+    border-radius: 12px;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+}
+
+.cart hr {
+    height: 1px;
+    background-color: #f0f0f0;
+    border: none;
+}
+
+/* Style the plain "x" into a sleek remove button */
+.cart-items-item .cross {
+    cursor: pointer;
+    font-weight: 600;
+    color: #ff4c24;
+    font-size: 16px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #fff4f2;
+    transition: 0.3s ease;
+}
+
+.cart-items-item .cross:hover {
+    background-color: #ff4c24;
+    color: white;
+    transform: scale(1.1);
+}
+
+/* Bottom layout */
+.cart-bottom {
+    margin-top: 60px;
+    display: flex;
+    justify-content: space-between;
+    gap: max(10vw, 30px);
+}
+
+/* Transform the Cart Totals into a modern floating card */
+.cart-total {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.06);
+    border: 1px solid #f2f2f2;
+}
+
+.cart-total h2 {
+    font-size: 24px;
+    color: #262626;
+    margin-bottom: 10px;
+}
+
+.cart-total-details {
+    display: flex;
+    justify-content: space-between;
+    color: #555;
+    font-size: 16px;
+    height: 30px;
+}
+
+.cart-total-details b {
+    color: #262626;
+    font-size: 18px;
+}
+
+/* Checkout Button */
+.cart-total button {
+    border: none;
+    color: white;
+    background-color: #ff4c24;
+    padding: 16px 0px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    margin-top: 15px;
+    box-shadow: 0px 4px 10px rgba(255, 76, 36, 0.3);
+}
+
+.cart-total button:hover {
+    background-color: #e63e18;
+    transform: translateY(-2px);
+    box-shadow: 0px 6px 15px rgba(255, 76, 36, 0.4);
+}
+
+/* Promo Code Section */
+.cart-promocode {
+    flex: 1;
+    padding-top: 10px;
+}
+
+.cart-promocode p {
+    color: #555;
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+
+.cart-promocode-input {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    overflow: hidden; /* Keeps the button flush with the border */
+    transition: 0.3s ease;
+}
+
+.cart-promocode-input:focus-within {
+    border-color: #8b5930;
+    box-shadow: 0 0 0 3px rgba(139, 89, 48, 0.1);
+}
+
+.cart-promocode-input input {
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 15px;
+    flex: 1;
+    font-size: 15px;
+    color: #262626;
+}
+
+/* Promo Code Submit Button */
+.cart-promocode-input button {
+    padding: 15px 30px;
+    background-color: #323232;
+    border: none;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.cart-promocode-input button:hover {
+    background-color: #8b5930; /* Your earthy brown footer color */
+}
+
+@media (max-width: 750px) {
+    .cart-bottom {
+        flex-direction: column-reverse;
+    }
+    .cart-promocode {
+        justify-content: start;
+    }
+    .cart-items-title {
+        font-size: 12px;
+    }
+}

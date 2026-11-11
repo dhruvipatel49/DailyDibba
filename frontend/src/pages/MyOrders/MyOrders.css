@@ -1,0 +1,262 @@
+.my-orders {
+    margin-top: 10px;
+    padding: 20px 35px;
+}
+
+.my-orders h2 {
+    font-size: max(2vw, 24px);
+    color: #262626;
+    font-weight: 600;
+    margin-bottom: 30px;
+}
+
+.my-orders .container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.my-orders-order {
+    display: grid;
+    grid-template-columns: 0.5fr 2.5fr 1fr 1fr 1fr 1fr;
+    align-items: center;
+    gap: 20px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.05);
+    border: 1px solid #f2f2f2;
+    font-size: 14px;
+    color: #49557e;
+}
+
+.my-orders-order img {
+    width: 50px;
+}
+
+.order-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.cook-name {
+    font-weight: 600;
+    color: #262626;
+    font-size: 16px;
+}
+
+.order-items {
+    color: #555;
+}
+
+.order-date {
+    font-size: 12px;
+    color: #808080;
+}
+
+.order-amount {
+    font-weight: 600;
+    font-size: 16px;
+    color: #262626;
+}
+
+.order-items-count {
+    font-weight: 500;
+}
+
+.order-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.order-status .dot {
+    font-size: 18px;
+}
+
+.order-status .dot.orange {
+    color: #ff4c24; /* Tomato for active orders */
+}
+
+.order-status .dot.green {
+    color: #28a745; /* Green for delivered orders */
+}
+
+.order-status .dot.red {
+    color: #e53e3e; /* Red for cancelled orders */
+}
+
+.order-status .dot.blue {
+    color: #3182ce; /* Blue for in-progress */
+}
+
+.order-status b {
+    color: #555;
+    font-weight: 500;
+}
+
+.my-orders-order button {
+    border: none;
+    padding: 12px 0px;
+    border-radius: 8px;
+    background-color: #fff4f2;
+    color: #ff4c24;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+.my-orders-order button:hover {
+    background-color: #ff4c24;
+    color: white;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 900px) {
+    .my-orders-order {
+        grid-template-columns: 1fr 2fr 1fr;
+        row-gap: 15px;
+    }
+    .my-orders-order button {
+        font-size: 12px;
+        padding: 10px 0;
+    }
+}
+/* --- Tracking Map Section --- */
+.tracking-map-section {
+    background-color: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.08);
+    border: 1px solid #f2f2f2;
+    margin-bottom: 30px;
+    animation: slideDown 0.4s ease;
+}
+
+.tracking-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.tracking-header h3 {
+    color: #262626;
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.tracking-tag {
+    display: inline-block;
+    background-color: #fff4f2;
+    color: #ff4c24;
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.close-track-btn {
+    background: none;
+    border: none;
+    color: #808080;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.close-track-btn:hover {
+    color: #ff4c24;
+}
+
+/* --- Map Placeholder UI --- */
+.map-placeholder {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    background-color: #e5e3df; /* Standard map background tint */
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+}
+
+/* Creates a fake street grid aesthetic */
+.map-placeholder::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: linear-gradient(white 2px, transparent 2px),
+                      linear-gradient(90deg, white 2px, transparent 2px);
+    background-size: 50px 50px;
+    opacity: 0.4;
+}
+
+.map-route-line {
+    position: absolute;
+    top: 50%;
+    left: 60px;
+    right: 60px;
+    height: 5px;
+    background-color: #4285f4; /* Google Maps blue */
+    transform: translateY(-50%);
+    border-radius: 5px;
+    z-index: 1;
+}
+
+.map-pin {
+    position: relative;
+    z-index: 2;
+    font-size: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    width: 45px;
+    height: 45px;
+    justify-content: center;
+    border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.map-pin span {
+    position: absolute;
+    bottom: -28px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #262626;
+    white-space: nowrap;
+    background-color: white;
+    padding: 4px 10px;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Simple CSS animation to make the scooter "drive" */
+.delivery-pin {
+    animation: drive 3s infinite alternate ease-in-out;
+}
+
+@keyframes drive {
+    0% { transform: translateX(-30px); }
+    100% { transform: translateX(30px); }
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 750px) {
+    .map-placeholder {
+        padding: 0 20px;
+    }
+    .map-route-line {
+        left: 30px;
+        right: 30px;
+    }
+}

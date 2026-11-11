@@ -1,0 +1,29 @@
+.wishlist-page {
+    margin-top: 10px;
+    padding: 20px 35px;
+    min-height: 50vh;
+}
+
+.wishlist-page h2 {
+    font-size: max(2vw, 24px);
+    color: #262626;
+    font-weight: 600;
+    margin-bottom: 30px;
+}
+
+/* Reusing the grid layout from FoodDisplay */
+.wishlist-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 30px;
+    row-gap: 50px;
+}
+
+.empty-wishlist {
+    text-align: center;
+    padding: 50px 0;
+    color: #808080;
+    font-size: 16px;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+}
