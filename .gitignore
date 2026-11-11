@@ -7,3 +7,11 @@ dist-ssr/
 .DS_Store
 frontend/src.zip
 backend/uploads/dishes/
+
+# Local environment files
+.env
+.env.*
+!.env.example
+
+# Dependencies
+node_modules/
