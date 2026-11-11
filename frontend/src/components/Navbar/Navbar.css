@@ -3,7 +3,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: linear-gradient(to bottom, #fbb366c6, #ffffffc6);
+
+    /* Layer a white overlay at 85% opacity on top of the image */
+    background-image: linear-gradient(rgba(244, 243, 243, 0.85), rgba(255, 255, 255, 0.85)), url('../../assets/bg_02.png');
+
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }
 
 .navbar .logo {

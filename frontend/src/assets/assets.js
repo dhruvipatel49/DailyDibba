@@ -28,7 +28,8 @@ import bag_icon from './bag_icon.png'
 import logout_icon from './logout_icon.png'
 import parcel_icon from './parcel_icon.png'
 import notification from './notification.png'
-
+import bg_01 from './bg_01.png'
+import bg_02 from './bg_02.png'
 export const assets = {
     logo,
     basket_icon,
@@ -55,5 +56,7 @@ export const assets = {
     food_3,
     food_4,
     food_5,
-    notification
+    notification,
+    bg_01,
+    bg_02
 }

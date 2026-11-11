@@ -1,0 +1,55 @@
+.cook-menu-form {
+  background: #ffffff;
+  border: 1px solid #eeeeee;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 32px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.cook-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.cook-input {
+  padding: 11px 14px;
+  border-radius: 8px;
+  border: 1px solid #d9d9d9;
+  font-size: 14px;
+  font-family: inherit;
+  width: 100%;
+  background-color: #ffffff;
+  color: #262626;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cook-textarea {
+  margin-top: 14px;
+  min-height: 92px;
+  line-height: 1.5;
+  resize: vertical;
+  vertical-align: top;
+  display: block;
+}
+
+.cook-input:focus,
+.cook-textarea:focus {
+  outline: none;
+  border-color: #ff4c24;
+  box-shadow: 0 0 0 3px rgba(255, 76, 36, 0.12);
+}
+
+.cook-menu-form input[type="checkbox"]:focus-visible,
+.cook-menu-form input[type="file"]:focus-visible {
+  outline: 2px solid #ff4c24;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media (max-width: 640px) {
+  .cook-form-grid {
+    grid-template-columns: 1fr;
+  }
+}

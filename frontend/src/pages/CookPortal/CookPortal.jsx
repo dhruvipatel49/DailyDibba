@@ -45,7 +45,10 @@ const CookPortal = () => {
     try {
       const res = await updateCookProfile({ isOpen: !profile.isOpen });
       setProfile(res?.profile || { ...profile, isOpen: !profile.isOpen });
-      showToast(profile.isOpen ? 'Kitchen marked closed' : 'Kitchen is now open for orders!', 'success');
+      showToast(
+        profile.isOpen ? 'Kitchen marked closed' : 'Kitchen is now open for orders!',
+        profile.isOpen ? 'warning' : 'success',
+      );
     } catch (err) {
       showToast(err.message || 'Could not update kitchen status.', 'error');
     } finally {

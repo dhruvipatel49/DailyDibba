@@ -43,10 +43,18 @@ const TiffinCard = ({ item }) => {
         {/* Size Selector */}
         <div className="size-selector">
           <p>Tiffin Size:</p>
-          <div className="size-options">
-            <span className={size === 'small'   ? 'active' : ''} onClick={() => setSize('small')}>Small</span>
-            <span className={size === 'regular' ? 'active' : ''} onClick={() => setSize('regular')}>Regular</span>
-            <span className={size === 'large'   ? 'active' : ''} onClick={() => setSize('large')}>Large</span>
+          <div className="size-options" role="group" aria-label="Tiffin size">
+            {['small', 'regular', 'large'].map((opt) => (
+              <button
+                key={opt}
+                type="button"
+                className={`size-option ${size === opt ? 'active' : ''}`}
+                aria-pressed={size === opt}
+                onClick={() => setSize(opt)}
+              >
+                {opt.charAt(0).toUpperCase() + opt.slice(1)}
+              </button>
+            ))}
           </div>
         </div>
 

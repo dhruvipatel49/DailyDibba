@@ -152,19 +152,16 @@
 /* --- Filter Bar Styling --- */
 .cooks-filter-bar {
     display: flex;
-    gap: 15px;
-    margin-bottom: 30px;
-    overflow-x: auto;
-    padding-bottom: 10px; /* Space for a subtle scrollbar if needed on mobile */
-}
-
-/* Hides the scrollbar for a cleaner UI on desktop */
-.cooks-filter-bar::-webkit-scrollbar {
-    display: none;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 4px;
 }
 
 .filter-chip {
     padding: 8px 20px;
+    margin-right: 2px;
     background-color: #f2f2f2;
     border: 1px solid #e0e0e0;
     border-radius: 50px;
@@ -202,8 +199,8 @@
     flex-wrap: wrap;
     align-items: center;
     gap: 14px;
-    margin-top: -15px;
-    margin-bottom: 25px;
+    margin-top: 0;
+    margin-bottom: 28px;
 }
 
 .cooks-select {

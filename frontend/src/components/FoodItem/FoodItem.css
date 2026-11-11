@@ -5,10 +5,14 @@
     box-shadow: 0px 0px 10px #00000015;
     transition: 0.3s;
     animation: fadeIn 1s;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
 }
 
 .food-item-image {
     width: 100%;
+    display: block;
     border-radius: 15px 15px 0px 0px;
     object-fit: cover;
     aspect-ratio: 4/3; /* Keeps all food images consistent */
@@ -18,40 +22,18 @@
     position: relative;
 }
 
-.food-item-img-container .add {
-    width: 35px;
-    position: absolute;
-    bottom: 15px;
-    right: 15px;
-    cursor: pointer;
-    border-radius: 50%;
-}
-
-.food-item-counter {
-    position: absolute;
-    bottom: 15px;
-    right: 15px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 6px;
-    border-radius: 50px;
-    background-color: white;
-}
-
-.food-item-counter img {
-    width: 30px;
-    cursor: pointer;
-}
-
 .food-item-info {
-    padding: 20px;
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
 
 .food-item-name-rating {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 10px;
     margin-bottom: 10px;
 }
 
@@ -67,14 +49,90 @@
 .food-item-desc {
     color: #676767;
     font-size: 12px;
+    line-height: 1.45;
+}
+
+.food-item-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: auto;
+    padding-top: 14px;
 }
 
 .food-item-price {
     color: tomato;
     font-size: 22px;
-    font-weight: 500;
-    margin: 10px 0px 0px;
+    font-weight: 600;
+    margin: 0;
+    line-height: 1;
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
 }
+
+.food-item-soldout {
+    font-size: 12px;
+    font-weight: 500;
+    color: #808080;
+}
+
+.food-item-add-btn {
+    padding: 8px 16px;
+    border-radius: 50px;
+    border: 1px solid #ff4c24;
+    background-color: #fff4f2;
+    color: #ff4c24;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    line-height: 1;
+    transition: 0.2s ease;
+}
+
+.food-item-add-btn:hover {
+    background-color: #ff4c24;
+    color: #ffffff;
+}
+
+.food-item-counter {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px 10px;
+    border-radius: 50px;
+    background-color: #ffffff;
+    border: 1px solid #e5e5e5;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+.food-item-counter .counter-step-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    padding: 2px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.food-item-counter img {
+    width: 26px;
+    height: 26px;
+    display: block;
+}
+
+.food-item-counter p {
+    min-width: 16px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 14px;
+    color: #262626;
+    margin: 0;
+}
+
 /* Wishlist Icon Styling */
 .wishlist-icon {
     position: absolute;
@@ -93,6 +151,7 @@
     transition: 0.2s;
     user-select: none;
 }
+
 .wishlist-icon:hover {
     transform: scale(1.1);
 }

@@ -77,7 +77,7 @@ const MyOrders = () => {
     setActionBusy((prev) => ({ ...prev, [orderId]: true }));
     try {
       await cancelOrder(orderId);
-      showToast('Order cancelled.', 'success');
+      showToast('Order cancelled.', 'warning');
       await fetchOrders();
     } catch (err) {
       showToast(err.message || 'Could not cancel order.', 'error');

@@ -1,3 +1,4 @@
+// DeliveryBoard.jsx
 import React, { useState, useEffect, useCallback, useContext } from 'react'
 import {
   getDeliveries,
@@ -9,16 +10,15 @@ import {
 import { StoreContext } from '../../context/StoreContext'
 import { formatAddress, formatDateTime } from '../../utils/format.js'
 
-const actionBtn = (bg) => ({
-  padding: '8px 20px',
-  background: bg,
-  color: '#fff',
-  border: 'none',
-  borderRadius: 20,
-  cursor: 'pointer',
-  fontSize: 14,
-  fontWeight: 600,
-});
+// Clean SVG Icons replacing emojis
+const Icons = {
+  MapPin: () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>,
+  User: () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>,
+  Clock: () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>,
+  Store: () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>,
+  Package: () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>,
+  Inbox: () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"></polyline><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path></svg>
+};
 
 const DeliveryBoard = ({ kind, title, emptyMessage }) => {
   const { showToast } = useContext(StoreContext);
@@ -77,7 +77,7 @@ const DeliveryBoard = ({ kind, title, emptyMessage }) => {
         showToast('Assignment accepted!', 'success');
       } else {
         await declineAssignment(assignmentId);
-        showToast('Assignment declined.', 'success');
+        showToast('Assignment declined.', 'neutral');
       }
       await fetchData();
     } catch (err) {
@@ -90,154 +90,229 @@ const DeliveryBoard = ({ kind, title, emptyMessage }) => {
   const pickupTriggerStatus = kind === 'pickup' ? 'pending' : 'ready';
 
   return (
-    <div style={{ maxWidth: 1400, margin: '0 auto', padding: '32px 20px' }}>
-      <h2 style={{ color: '#49557e', marginBottom: 24 }}>{title}</h2>
+    <div style={{ maxWidth: 1400, margin: '0 auto', padding: '40px 20px', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 32 }}>
+        <h2 style={{ color: '#111827', margin: 0, fontSize: '1.5rem', fontWeight: 700 }}>{title}</h2>
+      </div>
 
-      {error && <p style={{ color: '#e53e3e', marginBottom: 16, fontSize: 14 }}>{error}</p>}
-
-      {/* Assignment offers */}
-      {assignments.length > 0 && (
-        <div style={{ marginBottom: 32 }}>
-          <h3 style={{ color: '#49557e', marginBottom: 12 }}>📬 Assignment Offers</h3>
-          {assignments.map((a) => (
-            <div
-              key={a.id}
-              style={{
-                background: '#fff8f0',
-                border: '1px solid #ffd580',
-                borderRadius: 10,
-                padding: '12px 16px',
-                marginBottom: 10,
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                flexWrap: 'wrap',
-                gap: 8,
-              }}
-            >
-              <div>
-                <p style={{ fontWeight: 600 }}>
-                  #{a.orderCode || a.orderId?.slice(0, 8)} •{' '}
-                  <span style={{ color: 'tomato', fontSize: 12, textTransform: 'uppercase' }}>
-                    {a.type === 'pickup' ? 'Home Pickup' : 'Meal Delivery'}
-                  </span>
-                </p>
-                {a.cookName && (
-                  <p style={{ fontSize: 13, color: '#444', marginTop: 2 }}>
-                    🍱 From: {a.cookName} {a.cookArea ? `(${a.cookArea})` : ''}
-                  </p>
-                )}
-                {a.pickupAddress && (
-                  <p style={{ fontSize: 13, color: '#444', marginTop: 2 }}>
-                    🏠 Pickup: {a.pickupAddress} ({a.pickupDate} • {a.timeSlot})
-                  </p>
-                )}
-                {a.dropAddress && (
-                  <p style={{ fontSize: 13, color: '#444' }}>📦 Drop: {a.dropAddress}</p>
-                )}
-                {a.address && (
-                  <p style={{ fontSize: 13, color: '#666', marginTop: 2 }}>📍 {formatAddress(a.address)}</p>
-                )}
-                <p style={{ fontSize: 12, color: '#808080', marginTop: 2 }}>
-                  Contact: {a.contactName} ({a.contactPhone})
-                </p>
-              </div>
-              <div style={{ display: 'flex', gap: 8 }}>
-                <button
-                  type="button"
-                  onClick={() => handleAssignment(a.id, 'accept')}
-                  disabled={updating[a.id]}
-                  style={{ padding: '6px 16px', background: '#38a169', color: '#fff', border: 'none', borderRadius: 20, cursor: 'pointer', fontSize: 13, fontWeight: 600 }}
-                >
-                  {updating[a.id] ? '…' : 'Accept'}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleAssignment(a.id, 'decline')}
-                  disabled={updating[a.id]}
-                  style={{ padding: '6px 16px', background: '#e53e3e', color: '#fff', border: 'none', borderRadius: 20, cursor: 'pointer', fontSize: 13, fontWeight: 600 }}
-                >
-                  {updating[a.id] ? '…' : 'Decline'}
-                </button>
-              </div>
-            </div>
-          ))}
+      {error && (
+        <div style={{ background: '#FEF2F2', color: '#991B1B', padding: '12px 16px', borderRadius: 8, marginBottom: 24, fontSize: 14 }}>
+          {error}
         </div>
       )}
 
+      {/* Assignment Offers */}
+      {assignments.length > 0 && (
+        <div style={{ marginBottom: 40 }}>
+          <h3 style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#111827', fontSize: 16, fontWeight: 700, marginBottom: 16 }}>
+            <Icons.Inbox /> Assignment Offers
+          </h3>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+            {assignments.map((a) => (
+              <div
+                key={a.id}
+                style={{
+                  background: '#ffffffff',
+                  border: '1px solid #d8d8d2ff',
+                  borderRadius: 12,
+                  padding: '16px 20px',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  flexWrap: 'wrap',
+                  gap: 16,
+                  boxShadow: '0 1px 3px rgba(0,0,0,0.02)'
+                }}
+              >
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
+                    <span style={{ fontWeight: 700, color: '#111827' }}>#{a.orderCode || a.orderId?.slice(0, 8)}</span>
+                    <span style={{
+                      fontSize: 11,
+                      fontWeight: 700,
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.05em',
+                      background: '#FFFBEB',
+                      color: '#B45309',
+                      border: '1px solid #FDE68A',
+                      padding: '4px 10px',
+                      borderRadius: 20
+                    }}>
+                      {a.type === 'pickup' ? 'Home Pickup' : 'Meal Delivery'}
+                    </span>
+                  </div>
+
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 6, fontSize: 13, color: '#4B5563' }}>
+                    {a.cookName && (
+                      <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}><Icons.Store /> From: {a.cookName} {a.cookArea ? `(${a.cookArea})` : ''}</span>
+                    )}
+                    {a.pickupAddress && (
+                      <span style={{ display: 'flex', alignItems: 'flex-start', gap: 6 }}><span style={{ marginTop: 2 }}><Icons.MapPin /></span> Pickup: {a.pickupAddress} ({a.pickupDate} - {a.timeSlot})</span>
+                    )}
+                    {a.dropAddress && (
+                      <span style={{ display: 'flex', alignItems: 'flex-start', gap: 6 }}><span style={{ marginTop: 2 }}><Icons.Package /></span> Drop: {a.dropAddress}</span>
+                    )}
+                    {a.address && (
+                      <span style={{ display: 'flex', alignItems: 'flex-start', gap: 6 }}><span style={{ marginTop: 2 }}><Icons.MapPin /></span> {formatAddress(a.address)}</span>
+                    )}
+                    <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}><Icons.User /> {a.contactName} ({a.contactPhone})</span>
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', gap: 8 }}>
+                  <button
+                    type="button"
+                    onClick={() => handleAssignment(a.id, 'decline')}
+                    disabled={updating[a.id]}
+                    style={{ padding: '8px 16px', background: '#FFFFFF', color: '#374151', border: '1px solid #D1D5DB', borderRadius: 8, cursor: updating[a.id] ? 'not-allowed' : 'pointer', fontSize: 13, fontWeight: 600, opacity: updating[a.id] ? 0.6 : 1 }}
+                  >
+                    {updating[a.id] ? '...' : 'Decline'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleAssignment(a.id, 'accept')}
+                    disabled={updating[a.id]}
+                    style={{ padding: '8px 16px', background: '#111827', color: '#FFFFFF', border: 'none', borderRadius: 8, cursor: updating[a.id] ? 'not-allowed' : 'pointer', fontSize: 13, fontWeight: 600, opacity: updating[a.id] ? 0.6 : 1 }}
+                  >
+                    {updating[a.id] ? '...' : 'Accept Assignment'}
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Active Orders List */}
       {loading ? (
-        <p style={{ color: '#808080' }}>Loading…</p>
+        <div style={{ color: '#6B7280', textAlign: 'center', padding: '40px 0' }}>Loading deliveries…</div>
       ) : orders.length === 0 ? (
-        <p style={{ color: '#808080' }}>{emptyMessage}</p>
+        <div style={{ color: '#6B7280', textAlign: 'center', padding: '40px 0', background: '#F9FAFB', borderRadius: 12, border: '1px dashed #E5E7EB' }}>
+          {emptyMessage}
+        </div>
       ) : (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
           {orders.map((o) => (
             <div
               key={o.id}
               style={{
                 background: '#fff',
-                border: '1px solid #eee',
-                borderRadius: 12,
-                padding: '16px 20px',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                flexWrap: 'wrap',
-                gap: 10,
+                border: '1px solid #E5E7EB',
+                borderRadius: 16,
+                boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)',
+                overflow: 'hidden'
               }}
             >
-              <div>
-                <p style={{ fontWeight: 700, color: '#49557e' }}>
-                  #{o.orderCode || o.id?.slice(0, 8)} • ₹{o.totalAmount}
-                </p>
-                <p style={{ fontSize: 13, color: '#808080', marginTop: 2 }}>{formatDateTime(o.placedAt)}</p>
-                {kind === 'delivery' && (
-                  <p style={{ fontSize: 13, color: '#333', marginTop: 4 }}>🍱 {o.cookName || '—'}</p>
-                )}
-                {kind === 'pickup' && o.pickup && (
-                  <div style={{ fontSize: 13, color: '#333', marginTop: 4 }}>
-                    <p>👤 Sender: {o.pickup.senderName} ({o.pickup.senderPhone})</p>
-                    <p>🏠 Pickup: {o.pickup.pickupAddress}{o.pickup.landmark ? `, ${o.pickup.landmark}` : ''} — {o.pickup.pincode}</p>
-                    <p>🕒 Slot: {o.pickup.pickupDate} ({o.pickup.timeSlot})</p>
-                    {o.pickup.recipientName && (
-                      <p>📦 Recipient: {o.pickup.recipientName} ({o.pickup.recipientPhone}) — {o.pickup.dropAddress}</p>
-                    )}
-                    {o.pickup.instructions && <p style={{ color: '#666' }}>Note: {o.pickup.instructions}</p>}
+              {/* Header */}
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 24px', borderBottom: '1px solid #F3F4F6', background: '#FAFAFA' }}>
+                <div>
+                  <h3 style={{ margin: '0 0 4px 0', fontSize: 16, fontWeight: 700, color: '#111827' }}>
+                    #{o.orderCode || o.id?.slice(0, 8)}
+                  </h3>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, color: '#6B7280' }}>
+                    <Icons.Clock /> {formatDateTime(o.placedAt)}
                   </div>
-                )}
-                <p style={{ fontSize: 13, color: '#333', marginTop: 4 }}>
-                  📍 {formatAddress(o.address)}
-                </p>
-                <p style={{ fontSize: 12, color: '#666', marginTop: 2 }}>
-                  Customer: {o.contactName} ({o.contactPhone})
-                </p>
-                <p style={{ fontSize: 13, fontWeight: 600, marginTop: 4, color: 'tomato' }}>
-                  {o.statusLabel || o.status}
-                </p>
+                </div>
+                <div style={{ textAlign: 'right' }}>
+                  <div style={{ fontSize: 16, fontWeight: 700, color: '#111827', marginBottom: 4 }}>₹{o.totalAmount}</div>
+                  <span style={{
+                    fontSize: 12,
+                    fontWeight: 600,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.02em',
+                    background: o.status === 'out_for_delivery' ? '#EFF6FF' : '#F3F4F6',
+                    color: o.status === 'out_for_delivery' ? '#1D4ED8' : '#374151',
+                    border: `1px solid ${o.status === 'out_for_delivery' ? '#BFDBFE' : '#E5E7EB'}`,
+                    padding: '4px 10px',
+                    borderRadius: 20
+                  }}>
+                    {o.statusLabel || o.status}
+                  </span>
+                </div>
               </div>
-              <div style={{ display: 'flex', gap: 8 }}>
-                {o.status === pickupTriggerStatus && (
-                  <button
-                    type="button"
-                    onClick={() => handleStatus(o.id, 'out_for_delivery')}
-                    disabled={updating[o.id]}
-                    style={actionBtn('#49557e')}
-                  >
-                    {updating[o.id] ? '…' : 'Picked up'}
-                  </button>
-                )}
-                {o.status === 'out_for_delivery' && (
-                  <button
-                    type="button"
-                    onClick={() => handleStatus(o.id, 'delivered')}
-                    disabled={updating[o.id]}
-                    style={actionBtn('#38a169')}
-                  >
-                    {updating[o.id] ? '…' : 'Delivered'}
-                  </button>
-                )}
+
+              {/* Body */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 24, padding: '20px 24px' }}>
+
+                {/* Section A: Pickup Info */}
+                <div>
+                  <h4 style={{ fontSize: 12, textTransform: 'uppercase', color: '#9CA3AF', fontWeight: 600, margin: '0 0 12px 0', letterSpacing: '0.05em' }}>
+                    Pickup Details
+                  </h4>
+                  {kind === 'delivery' ? (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 8, fontSize: 14, color: '#4B5563' }}>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#111827', fontWeight: 600 }}><Icons.Store /> {o.cookName || '—'}</span>
+                    </div>
+                  ) : (
+                    o.pickup && (
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: 10, fontSize: 14, color: '#4B5563' }}>
+                        <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><Icons.User /> {o.pickup.senderName} ({o.pickup.senderPhone})</span>
+                        <span style={{ display: 'flex', alignItems: 'flex-start', gap: 8, lineHeight: 1.4 }}>
+                          <span style={{ marginTop: 2 }}><Icons.MapPin /></span>
+                          <span>{o.pickup.pickupAddress}{o.pickup.landmark ? `, ${o.pickup.landmark}` : ''} — {o.pickup.pincode}</span>
+                        </span>
+                        <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><Icons.Clock /> Slot: {o.pickup.pickupDate} ({o.pickup.timeSlot})</span>
+                      </div>
+                    )
+                  )}
+                </div>
+
+                {/* Section B: Dropoff Info */}
+                <div>
+                  <h4 style={{ fontSize: 12, textTransform: 'uppercase', color: '#9CA3AF', fontWeight: 600, margin: '0 0 12px 0', letterSpacing: '0.05em' }}>
+                    Dropoff Details
+                  </h4>
+                  {kind === 'pickup' && o.pickup?.recipientName ? (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 10, fontSize: 14, color: '#4B5563' }}>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><Icons.User /> {o.pickup.recipientName} ({o.pickup.recipientPhone})</span>
+                      <span style={{ display: 'flex', alignItems: 'flex-start', gap: 8, lineHeight: 1.4 }}>
+                        <span style={{ marginTop: 2 }}><Icons.MapPin /></span>
+                        <span>{o.pickup.dropAddress}</span>
+                      </span>
+                    </div>
+                  ) : (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 10, fontSize: 14, color: '#4B5563' }}>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><Icons.User /> {o.contactName} ({o.contactPhone})</span>
+                      <span style={{ display: 'flex', alignItems: 'flex-start', gap: 8, lineHeight: 1.4 }}>
+                        <span style={{ marginTop: 2 }}><Icons.MapPin /></span>
+                        <span>{formatAddress(o.address)}</span>
+                      </span>
+                    </div>
+                  )}
+
+                  {o.pickup?.instructions && (
+                    <div style={{ marginTop: 12, padding: '10px 14px', background: '#F3F4F6', borderLeft: '3px solid #9CA3AF', fontSize: 13, color: '#374151', borderRadius: '0 8px 8px 0' }}>
+                      <strong>Note:</strong> {o.pickup.instructions}
+                    </div>
+                  )}
+                </div>
               </div>
+
+              {/* Footer Actions */}
+              {(o.status === pickupTriggerStatus || o.status === 'out_for_delivery') && (
+                <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '16px 24px', borderTop: '1px solid #F3F4F6', background: '#FAFAFA' }}>
+                  {o.status === pickupTriggerStatus && (
+                    <button
+                      type="button"
+                      onClick={() => handleStatus(o.id, 'out_for_delivery')}
+                      disabled={updating[o.id]}
+                      style={{ padding: '8px 24px', background: 'tomato', color: '#fff', border: 'none', borderRadius: 8, cursor: updating[o.id] ? 'not-allowed' : 'pointer', fontSize: 14, fontWeight: 600, opacity: updating[o.id] ? 0.6 : 1 }}
+                    >
+                      {updating[o.id] ? 'Updating...' : 'Mark Picked Up'}
+                    </button>
+                  )}
+                  {o.status === 'out_for_delivery' && (
+                    <button
+                      type="button"
+                      onClick={() => handleStatus(o.id, 'delivered')}
+                      disabled={updating[o.id]}
+                      style={{ padding: '8px 24px', background: '#10B981', color: '#fff', border: 'none', borderRadius: 8, cursor: updating[o.id] ? 'not-allowed' : 'pointer', fontSize: 14, fontWeight: 600, opacity: updating[o.id] ? 0.6 : 1 }}
+                    >
+                      {updating[o.id] ? 'Updating...' : 'Mark Delivered'}
+                    </button>
+                  )}
+                </div>
+              )}
             </div>
           ))}
         </div>
@@ -247,4 +322,3 @@ const DeliveryBoard = ({ kind, title, emptyMessage }) => {
 };
 
 export default DeliveryBoard;
-

@@ -156,7 +156,7 @@ const LoginPopup = ({ setShowLogin }) => {
         </button>
 
         {currState === 'Login' ? (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginTop: '-8px' }}>
+          <div className="login-popup-links">
             <p>
               New customer?{' '}
               <span onClick={() => { setCurrState('Sign Up'); setError(''); }}>Sign up</span>
@@ -171,7 +171,7 @@ const LoginPopup = ({ setShowLogin }) => {
             </p>
           </div>
         ) : (
-          <p>
+          <p className="login-popup-switch">
             Already have an account?{' '}
             <span onClick={() => { setCurrState('Login'); setError(''); }}>Login here</span>
           </p>

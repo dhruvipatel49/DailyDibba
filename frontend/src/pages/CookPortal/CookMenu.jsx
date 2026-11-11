@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useContext } from 'react'
+import './CookMenu.css'
 import { getCookMenu, postMenuItem, patchMenuItem, deleteMenuItem } from '../../api/cook-portal.js'
 import { uploadImage } from '../../api/uploads.js'
 import { imageUrl } from '../../api/client.js'
@@ -7,7 +8,6 @@ import { StoreContext } from '../../context/StoreContext'
 const CATEGORIES = ['Gujarati', 'Punjabi', 'South Indian', 'Jain', 'Diet Food'];
 const EMPTY_FORM = { name: '', category: 'Gujarati', price: '', quantity: '', description: '', isVeg: true, imageUrl: '' };
 
-const inputStyle = { padding: '10px 12px', borderRadius: 8, border: '1px solid #e0e0e0', fontSize: 14, width: '100%' };
 const btnStyle = { padding: '10px 24px', background: 'tomato', color: '#fff', border: 'none', borderRadius: 50, cursor: 'pointer', fontSize: 15, fontWeight: 600 };
 
 const CookMenu = () => {
@@ -124,7 +124,7 @@ const CookMenu = () => {
     setBusyId(id);
     try {
       await deleteMenuItem(id);
-      showToast('Dish removed.', 'success');
+      showToast('Dish removed.', 'neutral');
       fetchMenu();
     } catch (err) {
       showToast(err.message || 'Could not delete dish.', 'error');
@@ -138,22 +138,22 @@ const CookMenu = () => {
       <h2 style={{ color: '#49557e', marginBottom: 24 }}>Today's Menu</h2>
 
       {/* Add / Edit Form */}
-      <form onSubmit={handleSubmit} style={{ background: '#fff', border: '1px solid #eee', borderRadius: 12, padding: '24px', marginBottom: 32, boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>
+      <form onSubmit={handleSubmit} className="cook-menu-form">
         <h3 style={{ color: '#49557e', marginBottom: 16 }}>{editId ? 'Edit Dish' : 'Add New Dish'}</h3>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-          <input style={inputStyle} type="text" placeholder="Dish name" value={form.name} onChange={setF('name')} minLength={2} required />
-          <select style={inputStyle} value={form.category} onChange={setF('category')}>
+        <div className="cook-form-grid">
+          <input className="cook-input" type="text" placeholder="Dish name" value={form.name} onChange={setF('name')} minLength={2} required />
+          <select className="cook-input" value={form.category} onChange={setF('category')}>
             {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
           </select>
-          <input style={inputStyle} type="number" placeholder="Price (₹)" value={form.price} onChange={setF('price')} min={1} max={5000} required />
-          <input style={inputStyle} type="number" placeholder="Quantity available" value={form.quantity} onChange={setF('quantity')} min={0} max={500} required />
+          <input className="cook-input" type="number" placeholder="Price (₹)" value={form.price} onChange={setF('price')} min={1} max={5000} required />
+          <input className="cook-input" type="number" placeholder="Quantity available" value={form.quantity} onChange={setF('quantity')} min={0} max={500} required />
         </div>
         <textarea
-          style={{ ...inputStyle, width: '100%', marginTop: 12 }}
+          className="cook-input cook-textarea"
           placeholder="Short description (optional)"
           value={form.description}
           onChange={setF('description')}
-          rows={2}
+          rows={3}
           maxLength={300}
         />
         <div style={{ display: 'flex', alignItems: 'center', gap: 24, marginTop: 12, flexWrap: 'wrap' }}>
